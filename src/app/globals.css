@@ -59,3 +59,30 @@
   }
 }
 
+/* styles.css */
+/* styles.css */
+.nav-link {
+  position: relative;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 14.4px;
+  letter-spacing: 0.6px;
+  color: #f7f7f4;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  visibility: hidden;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover::after {
+  visibility: visible;
+  width: 100%;
+}
