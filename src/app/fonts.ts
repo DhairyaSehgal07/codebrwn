@@ -1,4 +1,4 @@
-import { Fira_Mono, Outfit, Raleway } from "next/font/google";
+import { Fira_Mono, Outfit, Raleway, Roboto } from "next/font/google";
 
 // This defines the fira_mono with the latin subset
 export const fira_mono = Fira_Mono({
@@ -21,3 +21,8 @@ export const raleway = Raleway({
   display: "swap",
 });
 
+export const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});

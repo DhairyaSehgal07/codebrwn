@@ -1,15 +1,38 @@
-import React from "react";
-import { fira_mono } from "@/app/fonts";
+import ProductView from "@/components/common/ProductView";
+import Collection from "./components/Collection";
+import Season from "./components/Season";
+import FeaturedItem from "./components/FeaturedItem";
+import { Suspense } from "react";
+import Grid from "./components/Grid";
+import FeaturedItemTest from "./components/FeaturedItemTest";
+import Newsletter from "./components/Newsletter";
 
-const HomeScreen = () => {
+const HomeScreen = async () => {
+  const featuredItem = "gid://shopify/Product/7814082035892";
+
   return (
-    <div>
-      <p
-        className={`${fira_mono.className}  font-normal tracking-spaced-06 leading-14`}
-      >
-        This is a test using Fira Mono (500 weight) with custom styles.
-      </p>
-    </div>
+    <>
+      <ProductView
+        title={"SS24 COLLECTION"}
+        id={"gid://shopify/Collection/306787156148"}
+      />
+      <Collection
+        title={"SUMMER'24 COLLECTION"}
+        description={
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+        }
+      />
+      <Season
+        title={"FALL 2024"}
+        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius,
+              blanditiis? Eveniet iste repellendus dolores incidunt aspernatur"
+      />
+      <Suspense fallback={null}>
+        <FeaturedItem id={featuredItem} />
+      </Suspense>
+      <Grid />
+      <Newsletter />
+    </>
   );
 };
 
