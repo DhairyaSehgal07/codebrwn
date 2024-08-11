@@ -6,6 +6,8 @@ import { Suspense } from "react";
 import Grid from "./components/Grid";
 import FeaturedItemTest from "./components/FeaturedItemTest";
 import Newsletter from "./components/Newsletter";
+import TopBanner from "@/components/common/TopBanner";
+// import Navbar from "@/components/common/Navbar";
 
 const HomeScreen = async () => {
   const featuredItem = "gid://shopify/Product/7814082035892";

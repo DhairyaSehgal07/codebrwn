@@ -73,33 +73,38 @@ const SheetContent = React.forwardRef<
       {children}
 
       <nav className="absolute left-0 top-0 w-screen">
-        <TopBanner />
-        <ul className="flex h-[78px] justify-between bg-[#F3F1EA] px-6 py-5">
-          <li className="jusstify-center flex items-center">
+        {/* <TopBanner /> */}
+        <ul className="flex justify-between bg-[#F3F1EA] px-6 py-8">
+          {/* Left Section (Close Button) */}
+          <li className="flex flex-1 items-center justify-start">
             <SheetPrimitive.Close>
               <X strokeWidth={1} className="h-10 w-10" />
               <span className="sr-only">Close</span>
             </SheetPrimitive.Close>
           </li>
-          <li className="flex items-center justify-center">
+
+          {/* Center Section (Logo) */}
+          <li className="flex flex-1 items-center justify-center">
             <Link href="/">
-              <div>
-                <Image
-                  height="60"
-                  width="48"
-                  alt="Navigation Logo"
-                  src="/cb-nav.svg"
-                  priority
-                  className="mb-1 ml-4"
-                />
-              </div>
+              <Image
+                height="60"
+                width="48"
+                alt="Navigation Logo"
+                src="/cb-nav.svg"
+                priority
+                style={{ width: "auto", height: "auto" }}
+              />
             </Link>
           </li>
-          <span
-            className={`${firaMono.className} flex items-center justify-center text-center text-sm font-medium leading-[14px] tracking-[0.6px]`}
-          >
-            Bag[0]
-          </span>
+
+          {/* Right Section (Bag) */}
+          <li className="flex flex-1 items-center justify-end">
+            <span
+              className={`${firaMono.className} text-center text-sm font-medium leading-[14px] tracking-[0.6px]`}
+            >
+              Bag[0]
+            </span>
+          </li>
         </ul>
       </nav>
     </SheetPrimitive.Content>

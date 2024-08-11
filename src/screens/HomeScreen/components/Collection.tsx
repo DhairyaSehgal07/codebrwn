@@ -34,7 +34,9 @@ const Collection = ({ title, description }: CollectionProps) => {
               >
                 {title}
               </span>
-              <span className="mt-[26px] h-[104px] w-[310px] text-center text-[20px] leading-[26px] tracking-[0.6px] text-[#FFFFFF]">
+              <span
+                className={`mt-[26px] ${outfit.className} h-[104px] w-[310px] text-center text-[20px] leading-[26px] tracking-[0.6px] text-[#FFFFFF]`}
+              >
                 {description}
               </span>
               <button className="mt-[48px] flex h-[54px] w-[120px] items-center justify-center gap-[8px] border-[1px] border-[#F7F7F4] px-6 py-4">
