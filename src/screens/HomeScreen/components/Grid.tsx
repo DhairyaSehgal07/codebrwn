@@ -103,7 +103,7 @@ const Grid = () => {
                 <h1
                   className={`${outfit.className} text-center text-[24px] font-medium leading-[28.8px] tracking-[0.6px]`}
                 >
-                  BAGS
+                  SHIRTS
                 </h1>
                 <div className="mt-3 flex items-center justify-center">
                   <button
@@ -203,7 +203,7 @@ const Grid = () => {
                 <h1
                   className={`${outfit.className} text-center text-[56px] font-medium leading-[67.2px] tracking-[0.6px]`}
                 >
-                  BAGS
+                  SHIRTS
                 </h1>
                 <div className="mt-8 flex items-center justify-center">
                   <button

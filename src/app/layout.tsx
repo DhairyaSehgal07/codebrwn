@@ -19,10 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html className="" lang="en">
-      <body className="relative">
+      <body className="relative overflow-x-hidden">
         <div className="flex min-h-screen flex-col">
-          <TopBanner />
-          <Navbar />
           {children}
           <Footer />
         </div>

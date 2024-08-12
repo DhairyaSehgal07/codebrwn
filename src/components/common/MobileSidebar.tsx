@@ -4,9 +4,22 @@ const fira_mono = Fira_Mono({ weight: "500", subsets: ["latin"] });
 import Link from "next/link";
 import MobileHoverDropdown from "./MobileHoverDropdown";
 
-export function MobileSidebar({ isSticky }: { isSticky: boolean }) {
-  const textColorClass = isSticky ? "text-black" : "text-white";
-  const borderColorClass = isSticky ? "border-black" : "border-white";
+interface MobileSidebarProps {
+  isSticky: boolean;
+  pathname: string;
+}
+
+export function MobileSidebar({ isSticky, pathname }: MobileSidebarProps) {
+  const textColorClass = isSticky
+    ? "text-black"
+    : pathname == "/"
+      ? "text-[#f7f7f4]"
+      : "text-black";
+  const borderColorClass = isSticky
+    ? "border-black"
+    : pathname == "/"
+      ? "border-[#f7f7f4]"
+      : "border-black";
 
   return (
     <Sheet>
