@@ -25,3 +25,7 @@ export const ADMIN_API_URL =
   process.env.NEXT_PUBLIC_SHOPIFY_ADMIN_API_ACCESS_DOMAIN;
 export const ADMIN_ACCESS_TOKEN =
   process.env.NEXT_PUBLIC_SHOPIFY_ADMIN_ACCESS_TOKEN;
+export const headers = {
+  "Content-Type": "application/json",
+  "X-Shopify-Storefront-Access-Token": STOREFRONT_TOKEN!,
+};

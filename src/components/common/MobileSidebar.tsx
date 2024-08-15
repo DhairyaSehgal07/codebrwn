@@ -33,13 +33,12 @@ export function MobileSidebar({ isSticky, pathname }: MobileSidebarProps) {
           />
         </div>
       </SheetTrigger>
-      <SheetContent side={"left"} className="w-screen bg-[#F3F1EA] lg:hidden">
-        <div className="flex min-h-screen flex-col">
-          {/* <SheetHeader className="flex w-[50%] items-center justify-center bg-blue-300 text-right">
-            <div>Logo</div>
-          </SheetHeader> */}
-
-          <main className="flex flex-1 flex-grow flex-col items-center justify-center">
+      <SheetContent
+        side={"left"}
+        className="flex min-h-screen w-screen flex-col bg-[#F3F1EA] lg:hidden"
+      >
+        <div className="flex flex-1 flex-col">
+          <main className="flex flex-1 flex-col items-center justify-center">
             <ul className="flex flex-col items-center justify-center">
               <Link href="/new-in">
                 <li
@@ -61,7 +60,7 @@ export function MobileSidebar({ isSticky, pathname }: MobileSidebarProps) {
             </ul>
           </main>
 
-          <footer className="space- grid grid-rows-2 space-y-[10px] py-10">
+          <footer className="mt-auto grid grid-rows-2 space-y-[10px] py-2">
             <div className="flex gap-8">
               <span
                 className={`${fira_mono.className} mobile-nav-footer-link underline`}

@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/common/Footer";
 import TopBanner from "@/components/common/TopBanner";
 import Navbar from "@/components/common/Navbar";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html className="" lang="en">
-      <body className="relative overflow-x-hidden">
-        <div className="flex min-h-screen flex-col">
+      <head>
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+      </head>
+      <body className="max-w-full">
+        <div className="flex min-h-screen flex-col overflow-x-clip">
           {children}
+          <Toaster />
           <Footer />
         </div>
       </body>

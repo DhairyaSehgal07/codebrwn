@@ -40,8 +40,11 @@ const Navbar = () => {
 
   const imageClass = pathname == "/" ? "/group-5286.svg" : "/cb-nav.svg";
 
-  const imagePositionClass =
-    pathname == "/" ? "lg:bottom-[78px]" : "lg:inset-0 lg:bottom-0";
+  const imagePositionClass = `z-1 relative bottom-[78px] h-[906px] w-full ${
+    ["/", "/new-in", "/about-us"].includes(pathname)
+      ? `${pathname === "/" ? "lg:bottom-[78px]" : "lg:inset-0 lg:bottom-0 h-[655px]"}`
+      : "hidden"
+  }`;
 
   return (
     <>
@@ -158,9 +161,7 @@ const Navbar = () => {
           </div>
         </section>
       </nav>
-      <div
-        className={`z-1 relative bottom-[78px] h-[906px] w-full ${imagePositionClass}`}
-      >
+      <div className={` ${imagePositionClass}`}>
         <Image
           src={imageUrl}
           alt=""

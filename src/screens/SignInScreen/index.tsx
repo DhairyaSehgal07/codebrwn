@@ -11,11 +11,11 @@ const SignInScreen = () => {
     <>
       <main className="mt-14 flex flex-col items-center justify-center">
         <h1
-          className={`${outfit.className} text-[32px] leading-[40.32px] tracking-spaced-06`}
+          className={`${outfit.className} text-[32px] font-normal leading-[40.32px] tracking-spaced-06 md:text-5xl lg:text-6xl lg:leading-[80.64px]`}
         >
           SIGN IN
         </h1>
-        <section className="mt-14 w-full px-6">
+        <section className="mt-14 w-full px-6 sm:mx-auto sm:w-[600px]">
           <form className="flex flex-col">
             <label
               className={`${outfit.className} text-base leading-[19.2px] text-[#828282]`}
@@ -24,10 +24,11 @@ const SignInScreen = () => {
               Email
             </label>
             <input
-              className="border-b-[0.6px] border-[#828282]"
+              className="border-b-[0.6px] border-[#828282] py-[6px] focus:outline-none"
               type="email"
               name="email"
               id="email"
+              aria-label="Email address input field"
             />
 
             <label
@@ -37,10 +38,11 @@ const SignInScreen = () => {
               Password
             </label>
             <input
-              className="border-b-[0.6px] border-[#828282]"
+              className="border-b-[0.6px] border-[#828282] py-[6px] focus:outline-none"
               type="password"
               name="password"
               id="password"
+              aria-label="Password input field"
             />
 
             <div
