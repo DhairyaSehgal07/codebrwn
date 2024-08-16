@@ -7,6 +7,7 @@ export const PUBLIC_APP_ID = process.env.NEXT_PUBLIC_APP_ID;
 export const MEASUREMENT_ID = process.env.NEXT_PUBLIC_MEASUREMENT_ID;
 export const SHOPIFY_CHECKOUT_URL_COOKIE = "shopify_checkoutUrl";
 export const SHOPIFY_COOKIE_EXPIRE = 90;
+export const SECRET_KEY = process.env.NEXT_PUBLIC_SECRET_KEY;
 
 export const API_URL =
   process.env.NEXT_PUBLIC_FRAMEWORK === "shopify_local"

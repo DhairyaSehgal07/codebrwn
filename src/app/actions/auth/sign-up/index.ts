@@ -3,28 +3,28 @@ import { CustomerCreateInput } from "@/utils/shopify-schemas/schema";
 import customerCreate from "@/lib/graphql/mutations/customer-create-mutation";
 import { schema } from "./formSchema";
 import { STOREFRONT_TOKEN, API_URL, headers } from "@/utils/const";
-
-interface formData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  notifications: boolean;
-}
+import logger from "@/lib/logger";
+import { generateToken } from "../common";
+import { initialiseCart } from "@/lib/firebase/cart";
+import { initialiseWishlist } from "@/lib/firebase/wishlist";
+import { Customer } from "@/utils/types";
 
 export type FormState = {
   message: string;
-  // fields?: Record<string, string | boolean>;
   issues?: string[];
 };
 
-export async function onSubmitAction(data: formData): Promise<FormState> {
+export async function onSubmitAction(data: Customer): Promise<FormState> {
+  logger.info("Form submission initiated");
+
   const parsed = schema.safeParse(data);
 
   if (!parsed.success) {
+    const validationIssues = parsed.error.issues.map((issue) => issue.message);
+    logger.warn("Form validation failed", { issues: validationIssues });
     return {
       message: "Invalid form data",
-      issues: parsed.error.issues.map((issue) => issue.message),
+      issues: validationIssues,
     };
   }
 
@@ -44,6 +44,7 @@ export async function onSubmitAction(data: formData): Promise<FormState> {
   };
 
   try {
+    logger.info("Sending registration request", { input });
     const res = await fetch(API_URL!, {
       method: "POST",
       headers,
@@ -56,12 +57,23 @@ export async function onSubmitAction(data: formData): Promise<FormState> {
 
     const responseData = await res.json();
 
-    console.log(responseData);
-    console.log("Request successful");
+    if (responseData.data.customerCreate.customer) {
+      const customer = responseData.data.customerCreate.customer;
+      // generate token
+      await generateToken(data.email, data.password);
 
-    return { message: "User registered" };
+      // init cart
+      await initialiseCart(customer.id);
+
+      // init wishlist
+      await initialiseWishlist(customer.id);
+
+      logger.info("User init successful");
+      return { message: "User registered" };
+    }
+    throw new Error("Customer creation failed");
   } catch (error: any) {
-    console.error("Error making request:", error);
+    logger.error("Error making request", { error: error.message });
     return { message: "Failed to register user", issues: [error.message] };
   }
 }

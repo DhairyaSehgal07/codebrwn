@@ -32,3 +32,11 @@ interface Collection {
 interface GetCollectionByIdResponse {
   collection: Collection | null; // collection might be null if not found
 }
+
+export interface Customer {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  notifications: boolean;
+}

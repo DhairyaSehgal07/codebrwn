@@ -2,11 +2,7 @@ const customerCreate = `
 mutation customerCreate($input: CustomerCreateInput!) {
   customerCreate(input: $input) {
     customer {
-      firstName
-      lastName
-      email
-      phone
-      acceptsMarketing
+      id
     }
     customerUserErrors {
       field
