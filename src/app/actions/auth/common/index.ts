@@ -6,6 +6,7 @@ import { SECRET_KEY } from "@/utils/const";
 import logger from "@/lib/logger";
 import { getCart } from "@/lib/firebase/cart";
 import { getWishlist } from "@/lib/firebase/wishlist";
+import { custom } from "zod";
 
 const key = new TextEncoder().encode(SECRET_KEY);
 
@@ -44,6 +45,12 @@ export async function storeToken(accessToken: string, expiresAt: string) {
     cookies().set("customer_token", encryptedToken, {
       expires,
       httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Ensure secure cookies in production
+    });
+    cookies().set("auth_status", "true", {
+      expires,
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
     });
 
     logger.info("Token stored successfully", { expiresAt });
@@ -88,6 +95,14 @@ export async function generateToken(email: string, password: string) {
   }
 }
 
+export async function logout() {
+  // Delete the customer_token cookie
+  cookies().set("customer_token", "", { expires: new Date(0) });
+
+  // Delete the auth_status cookie
+  cookies().set("auth_status", "", { expires: new Date(0) });
+}
+
 export async function getSession() {
   logger.info("Attempting to retrieve session");
 
@@ -130,14 +145,7 @@ export async function getSession() {
     const responseData = await res.json();
     const customer = responseData.data.customer;
 
-    const cart = await getCart(customer.id);
-    const wishlist = await getWishlist(customer.id);
-
-    return {
-      customer,
-      cart,
-      wishlist,
-    };
+    return customer;
   } catch (err: any) {
     logger.error("Error occurred in fetching customer details", {
       error: err.message,

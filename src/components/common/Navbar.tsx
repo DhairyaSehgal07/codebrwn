@@ -5,20 +5,16 @@ import Image from "next/image";
 import { Fira_Mono } from "next/font/google";
 import { outfit } from "@/app/fonts";
 import Link from "next/link";
-import DesktopHomeScreenHoverDropdown from "./DesktopHomeScreenHoverDropdown";
 import Auth from "../user/Auth";
 import Wishlist from "../user/Wishlist";
 import Cart from "../user/Cart";
 import { usePathname } from "next/navigation";
+import { SessionProvider } from "@/context/SessionContext";
+
 const fira_mono = Fira_Mono({ weight: "500", subsets: ["latin"] });
-
 const Navbar = () => {
-  const imageUrl =
-    "https://utfs.io/f/eeca5582-97b7-4b70-8374-b3a96d989469-iueuwy.jpg";
-
-  const pathname = usePathname();
-
   const [isSticky, setIsSticky] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +30,7 @@ const Navbar = () => {
     };
   }, []);
 
+  //constants
   const backgroundClass = pathname == "/" ? "bg-transparent" : "bg-[#F3F1EA]";
 
   const textClass = pathname == "/" ? "text-[#f7f7f4]" : "text-black";
@@ -45,6 +42,9 @@ const Navbar = () => {
       ? `${pathname === "/" ? "lg:bottom-[78px]" : "lg:inset-0 lg:bottom-0 h-[655px]"}`
       : "hidden"
   }`;
+
+  const imageUrl =
+    "https://utfs.io/f/eeca5582-97b7-4b70-8374-b3a96d989469-iueuwy.jpg";
 
   return (
     <>
@@ -81,7 +81,7 @@ const Navbar = () => {
                 isSticky ? "text-black" : textClass
               }`}
             >
-              Bag[0]
+              <Cart />
             </span>
           </div>
         </section>
@@ -133,13 +133,15 @@ const Navbar = () => {
                   </Link>
                 </div>
 
-                {/* Right Container */}
+                {/* Right Container Dynamic components */}
                 <div className="mx-auto flex flex-1 items-center justify-center py-[5px]">
                   <ul className="flex items-center space-x-12">
                     <li
                       className={`${fira_mono.className} nav-link relative cursor-pointer whitespace-nowrap text-xs leading-[14.4px] tracking-spaced-06 ${isSticky ? "text-[#000000]" : textClass} `}
                     >
-                      <Auth />
+                      <SessionProvider>
+                        <Auth />
+                      </SessionProvider>
                     </li>
 
                     <Link href="/user/wishlist">

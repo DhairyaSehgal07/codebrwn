@@ -3,15 +3,8 @@
 import * as React from "react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
-import { X } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { Fira_Mono } from "next/font/google";
-
-const firaMono = Fira_Mono({ weight: "500", subsets: ["latin"] });
 
 import { cn } from "@/lib/utils";
-import TopBanner from "../common/TopBanner";
 
 const Sheet = SheetPrimitive.Root;
 
@@ -71,42 +64,6 @@ const SheetContent = React.forwardRef<
       {...props}
     >
       {children}
-
-      <nav className="absolute left-0 top-0 w-full">
-        {/* <TopBanner /> */}
-        <ul className="flex justify-between bg-[#F3F1EA] px-6 py-8">
-          {/* Left Section (Close Button) */}
-          <li className="flex flex-1 items-center justify-start">
-            <SheetPrimitive.Close>
-              <X strokeWidth={1} className="h-10 w-10" />
-              <span className="sr-only">Close</span>
-            </SheetPrimitive.Close>
-          </li>
-
-          {/* Center Section (Logo) */}
-          <li className="flex flex-1 items-center justify-center">
-            <Link href="/">
-              <Image
-                height="60"
-                width="48"
-                alt="Navigation Logo"
-                src="/cb-nav.svg"
-                priority
-                style={{ width: "auto", height: "auto" }}
-              />
-            </Link>
-          </li>
-
-          {/* Right Section (Bag) */}
-          <li className="flex flex-1 items-center justify-end">
-            <span
-              className={`${firaMono.className} text-center text-sm font-medium leading-[14px] tracking-[0.6px]`}
-            >
-              Bag[0]
-            </span>
-          </li>
-        </ul>
-      </nav>
     </SheetPrimitive.Content>
   </SheetPortal>
 ));

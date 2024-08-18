@@ -1,5 +1,3 @@
-// logger.ts
-
 import winston from "winston";
 
 // Create a custom logger
@@ -15,11 +13,6 @@ const logger = winston.createLogger({
     new winston.transports.Console({
       // Output to console
       level: "info",
-    }),
-    new winston.transports.File({
-      // Output to a file
-      filename: "logs/application.log",
-      level: "error", // Only log errors to the file
     }),
   ],
 });

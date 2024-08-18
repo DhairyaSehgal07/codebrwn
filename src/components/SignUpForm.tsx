@@ -52,7 +52,7 @@ const SignUpForm = () => {
     if (!result.issues) {
       form.reset();
       toast.success("Sign up successful ");
-      router.push("/auth/sign-in");
+      router.push("/");
     }
     setState(result);
   };

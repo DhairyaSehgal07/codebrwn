@@ -1,8 +1,18 @@
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/mobilenav";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/mobilenav";
 import { Fira_Mono } from "next/font/google";
 const fira_mono = Fira_Mono({ weight: "500", subsets: ["latin"] });
 import Link from "next/link";
 import MobileHoverDropdown from "./MobileHoverDropdown";
+import { X } from "lucide-react";
+import Image from "next/image";
+import Cart from "../user/Cart";
+import { SessionProvider } from "@/context/SessionContext";
 
 interface MobileSidebarProps {
   isSticky: boolean;
@@ -37,6 +47,43 @@ export function MobileSidebar({ isSticky, pathname }: MobileSidebarProps) {
         side={"left"}
         className="flex min-h-screen w-screen flex-col bg-[#F3F1EA] lg:hidden"
       >
+        <SheetHeader>
+          <nav className="absolute left-0 top-0 w-full">
+            {/* <TopBanner /> */}
+            <ul className="flex justify-between bg-[#F3F1EA] px-6 py-8">
+              {/* Left Section (Close Button) */}
+              <li className="flex flex-1 items-center justify-start">
+                <SheetClose>
+                  <X strokeWidth={1} className="h-10 w-10" />
+                  <span className="sr-only">Close</span>
+                </SheetClose>
+              </li>
+
+              {/* Center Section (Logo) */}
+              <li className="flex flex-1 items-center justify-center">
+                <Link href="/">
+                  <Image
+                    height="60"
+                    width="48"
+                    alt="Navigation Logo"
+                    src="/cb-nav.svg"
+                    priority
+                    style={{ width: "auto", height: "auto" }}
+                  />
+                </Link>
+              </li>
+
+              {/* Right Section (Bag) */}
+              <li className="flex flex-1 items-center justify-end">
+                <span
+                  className={`${fira_mono.className} text-center text-sm font-medium leading-[14px] tracking-[0.6px]`}
+                >
+                  <Cart />
+                </span>
+              </li>
+            </ul>
+          </nav>
+        </SheetHeader>
         <div className="flex flex-1 flex-col">
           <main className="flex flex-1 flex-col items-center justify-center">
             <ul className="flex flex-col items-center justify-center">
@@ -52,6 +99,13 @@ export function MobileSidebar({ isSticky, pathname }: MobileSidebarProps) {
                   className={`${fira_mono.className} relative mt-6 cursor-pointer whitespace-nowrap text-center text-2xl leading-[28.8px] tracking-spaced-06 text-[#000000]`}
                 >
                   ABOUT US
+                </li>
+              </Link>
+              <Link href="/ss24">
+                <li
+                  className={`${fira_mono.className} relative mt-6 cursor-pointer whitespace-nowrap text-center text-2xl leading-[28.8px] tracking-spaced-06 text-[#000000]`}
+                >
+                  SS24 COLLECTION
                 </li>
               </Link>
               <li>

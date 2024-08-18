@@ -25,14 +25,20 @@ interface ProductCardProps {
   product: ProductNode;
 }
 
+const formatTitle = (title: string): string => {
+  return title.toLowerCase().replace(/\s+/g, "-");
+};
+
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const currencyCode = product.priceRange.minVariantPrice.currencyCode;
   const currencySymbol = currencySymbols[currencyCode] || currencyCode;
 
+  const formattedTitle = formatTitle(product.title);
+
   return (
     <>
       <Link
-        href={`/product/${product.id}`}
+        href={`/products/${formattedTitle}`}
         className="ease-in-quad cursor-pointer transition-all duration-150 focus-within:scale-[1.02] focus-within:ring-2 focus-within:ring-muted-foreground focus-within:ring-offset-2 hover:z-10 hover:scale-[1.02] hover:border-[0.5px] hover:border-black"
       >
         <div className="group relative">
