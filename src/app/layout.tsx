@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/common/Footer";
-import TopBanner from "@/components/common/TopBanner";
 import Navbar from "@/components/common/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { Providers } from "./providers";
@@ -26,7 +25,10 @@ export default function RootLayout({
       </head>
       <body className="max-w-full">
         <div className="flex min-h-screen flex-col overflow-x-clip">
-          <Providers>{children}</Providers>
+          <Providers>
+            <Navbar />
+            {children}
+          </Providers>
           <Toaster />
           <Footer />
         </div>

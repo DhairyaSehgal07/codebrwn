@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { outfit } from "@/app/fonts";
-import { API_URL, STOREFRONT_TOKEN } from "@/utils/const";
+import { API_URL, STOREFRONT_TOKEN, headers } from "@/utils/const";
 import { GET_SINGLE_HOME_COLLECTION } from "@/lib/graphql/queries";
 import ProductCard from "./ProductCard";
 import { Fira_Mono } from "next/font/google";
@@ -19,11 +19,6 @@ export async function Products({ id }: ProductProps) {
   const reqBody = {
     query: GET_SINGLE_HOME_COLLECTION,
     variables: { id },
-  };
-
-  const headers = {
-    "Content-Type": "application/json",
-    "X-Shopify-Storefront-Access-Token": STOREFRONT_TOKEN!,
   };
 
   try {
@@ -87,7 +82,7 @@ const ProductView: React.FC<ProductViewProps> = async ({ title, id }) => {
             <h1
               className={`${outfit.className} text-center text-[32px] font-medium leading-[38.4px] tracking-spaced-06`}
             >
-              SS24 COLLECTION
+              {title}
             </h1>
             <button className="h-[46px] w-[122px] gap-[8px] border-[1px] border-[#000000] bg-[#FFFFFF] px-6 py-4 text-center">
               <p

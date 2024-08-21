@@ -40,3 +40,82 @@ export interface Customer {
   password: string;
   notifications: boolean;
 }
+
+export interface ProductImage {
+  id: string;
+  height: string;
+  width: string;
+  url: string;
+}
+
+interface ProductPrice {
+  amount: string;
+  currencyCode: string;
+}
+
+export interface ProductVariant {
+  id: string;
+  title: string;
+  currentlyNotInStock: boolean;
+  sku: string;
+  priceV2: ProductPrice;
+  compareAtPriceV2: ProductPrice | null;
+  availableForSale: boolean;
+  selectedOptions: {
+    name: string;
+    value: string;
+  }[];
+  image: ProductImage | null;
+}
+
+export interface Product {
+  title: string;
+  description: string;
+  featuredImage: ProductImage | null;
+  images: {
+    edges: {
+      node: ProductImage;
+    }[];
+  };
+  priceRange: {
+    minVariantPrice: ProductPrice;
+    maxVariantPrice: ProductPrice;
+  };
+  compareAtPriceRange: {
+    minVariantPrice: ProductPrice;
+    maxVariantPrice: ProductPrice;
+  };
+  variants: {
+    edges: {
+      node: ProductVariant;
+    }[];
+  };
+  vendor: string;
+  productType: string;
+  tags: string[];
+  totalInventory: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface NormalizedProduct {
+  title: string;
+  description: string;
+  featuredImage: ProductImage | null;
+  images: ProductImage[];
+  priceRange: {
+    minVariantPrice: ProductPrice;
+    maxVariantPrice: ProductPrice;
+  };
+  compareAtPriceRange: {
+    minVariantPrice: ProductPrice;
+    maxVariantPrice: ProductPrice;
+  };
+  variants: ProductVariant[];
+  vendor: string;
+  productType: string;
+  tags: string[];
+  totalInventory: number;
+  createdAt: string;
+  updatedAt: string;
+}

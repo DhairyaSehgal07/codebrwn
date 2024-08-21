@@ -1,5 +1,8 @@
+import Loader from "@/components/common/Loader";
+import { ProductSkeleton } from "@/components/common/loading-skeletons/ProductSkeleton";
 import Navbar from "@/components/common/Navbar";
-import React from "react";
+import SingleProductScreen from "@/screens/SingleProductScreen";
+import React, { Suspense } from "react";
 
 // Define the type for the params
 interface PageParams {
@@ -11,8 +14,9 @@ interface PageParams {
 const page = ({ params }: PageParams) => {
   return (
     <>
-      <Navbar />
-      <h1 className="text-2xl">This is product page</h1>
+      <Suspense fallback={<Loader />}>
+        <SingleProductScreen handle={params.slug[0]} />
+      </Suspense>
     </>
   );
 };

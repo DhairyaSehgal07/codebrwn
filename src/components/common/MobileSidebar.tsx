@@ -130,7 +130,7 @@ export function MobileSidebar({ isSticky, pathname }: MobileSidebarProps) {
             <div
               className={`${fira_mono.className} text-xs leading-[14.px] tracking-spaced-06`}
             >
-              @2024 , CODE BRWN
+              @2024 , CODEBRWN
             </div>
           </footer>
         </div>

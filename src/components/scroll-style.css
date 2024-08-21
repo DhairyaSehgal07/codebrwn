@@ -1,0 +1,22 @@
+.scroll-container {
+  height: 800px;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer and Edge */
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 0; /* Hide scrollbar in WebKit-based browsers (Chrome, Safari) */
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: none; /* No background to scrollbar track */
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: none; /* No thumb (scroll handle) */
+}
+
+.scroll-container::-webkit-scrollbar-button {
+  display: none; /* No scrollbar buttons */
+}

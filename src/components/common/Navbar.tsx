@@ -48,6 +48,15 @@ const Navbar = () => {
 
   return (
     <>
+      <header className={`bg-white ${pathname === "/" ? "visible" : "hidden"}`}>
+        <div className="flex justify-center gap-2">
+          <span
+            className={`mt-[0.4px] h-6 w-full bg-darkgreen p-2 text-center text-[10px] leading-[10px] tracking-[0.8px] text-white opacity-90 ${fira_mono.className} `}
+          >
+            WELCOME TO CODEBRWN!!
+          </span>
+        </div>
+      </header>
       <nav
         className={`sticky left-0 top-0 z-50 w-full transition-colors duration-500 ease-in-out ${isSticky ? "bg-[#F3F1EA]" : backgroundClass}`}
       >

@@ -3,9 +3,13 @@ import { LoaderCircle } from "lucide-react";
 
 const Loader = () => {
   return (
-    <>
-      <LoaderCircle className="rotate-div" size={48} strokeWidth={0.5} />
-    </>
+    <div className="mb-32 flex h-screen items-center justify-center">
+      <LoaderCircle
+        className="h-32 w-32 animate-spin"
+        size={48}
+        strokeWidth={0.5}
+      />
+    </div>
   );
 };
 

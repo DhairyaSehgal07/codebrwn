@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <>
       <Link
         href={`/products/${formattedTitle}`}
-        className="ease-in-quad cursor-pointer transition-all duration-150 focus-within:scale-[1.02] focus-within:ring-2 focus-within:ring-muted-foreground focus-within:ring-offset-2 hover:z-10 hover:scale-[1.02] hover:border-[0.5px] hover:border-black"
+        className="ease-in-quad cursor-pointer transition-all duration-150 hover:z-10 hover:scale-[1.02] hover:border-[0.5px] hover:border-black focus-visible:scale-[1.02] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
       >
         <div className="group relative">
           <picture className="aspect-h-1 aspect-w-1 lg:aspect-none w-full overflow-hidden hover:opacity-75 lg:h-96">

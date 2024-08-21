@@ -1,4 +1,5 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { useWishlist } from "@/hooks/useWishlist";
 import { SkeletonDemo } from "../common/loading-skeletons/mobile-nav-skeleton";
 import Cookies from "js-cookie";
@@ -12,9 +13,9 @@ const Authenticated = () => {
   return (
     <>
       {data?.wishlist ? (
-        <>WISHLIST[{data.wishlist.items.length + 2}]</>
+        <>WISHLIST[{data.wishlist.items.length}]</>
       ) : (
-        <>UA WISHLIST[0]</>
+        <> WISHLIST</>
       )}
     </>
   );
@@ -25,10 +26,11 @@ const Wishlist = () => {
 
   if (!auth) {
     // If auth_status is not present, show default content
-    return <span>UA WISHLIST[0]</span>;
+    return <span>WISHLIST</span>;
   }
 
   return <Authenticated />;
 };
 
-export default Wishlist;
+// Dynamically import the Wishlist component with SSR disabled
+export default dynamic(() => Promise.resolve(Wishlist), { ssr: false });

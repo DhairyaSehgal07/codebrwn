@@ -93,11 +93,13 @@ export async function FeaturedItemTest({
               </h1>
               <div className="mt-4 flex items-center justify-center">
                 <p
-                  className={`${outfit.className} w-[382px] text-center text-[22px] font-light leading-[28.6px] tracking-[0.6px] md:w-auto`}
+                  style={{
+                    textAlign: "justify", // Align text evenly on both sides
+                    hyphens: "auto", // Enable hyphenation for better text wrapping
+                  }}
+                  className={`${outfit.className} w-[382px] px-2 text-center text-[22px] font-light leading-[28.6px] tracking-[0.6px] md:w-auto`}
                 >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
-                  officia repudiandae, consectetur natus cumque corporis
-                  voluptate quas quod ad fugiat.
+                  {product.description}
                 </p>
               </div>
               <div className="flex justify-center">
@@ -114,7 +116,7 @@ export async function FeaturedItemTest({
         </div>
 
         <div className="hidden w-full bg-[#4C000A] py-[160px] text-white xl:block">
-          <div className="mx-[210px] grid max-w-full grid-cols-2 items-center lg:space-x-28 2xl:space-x-8">
+          <div className="mx-[210px] grid max-w-full grid-cols-2 items-center lg:space-x-40 2xl:space-x-8">
             {/* Image Section */}
             <picture className="relative h-[726px]">
               <Image
@@ -142,11 +144,13 @@ export async function FeaturedItemTest({
                 </h1>
                 <div className="mt-4 flex items-center justify-center">
                   <p
+                    style={{
+                      textAlign: "justify", // Align text evenly on both sides
+                      hyphens: "auto", // Enable hyphenation for better text wrapping
+                    }}
                     className={`${outfit.className} text-center text-[22px] font-light leading-[28.6px] tracking-[0.6px] lg:w-[450px] 2xl:w-auto`}
                   >
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
-                    officia repudiandae, consectetur natus cumque corporis
-                    voluptate quas quod ad fugiat.
+                    {product.description}
                   </p>
                 </div>
                 <div className="flex justify-center">
