@@ -77,7 +77,7 @@ const SignInForm = () => {
           <form
             onSubmit={handleSubmit(onSubmit)}
             ref={formRef}
-            className="space-y-8"
+            className="space-y-12"
           >
             <div className="flex flex-col gap-2">
               <FormField
@@ -126,7 +126,7 @@ const SignInForm = () => {
               />
             </div>
 
-            <div className="mt-11 flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center">
               <span className="text-center">
                 <p
                   className={`${fira_mono.className} text-base font-bold leading-[19.2px]`}

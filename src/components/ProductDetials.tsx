@@ -17,7 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-const ProductDetials = () => {
+const ProductDetials = ({ productDetails }: { productDetails: string }) => {
   return (
     <>
       <section className="mt-24 lg:mt-16">
@@ -31,9 +31,17 @@ const ProductDetials = () => {
             <AccordionContent
               className={`${outfit.className} font-light leading-[20.8px] tracking-[0.6px]`}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud.
+              <div className="mt-4 flex items-center justify-center">
+                <p
+                  style={{
+                    textAlign: "justify", // Align text evenly on both sides
+                    hyphens: "auto", // Enable hyphenation for better text wrapping
+                  }}
+                  className={`${outfit.className} text-center text-[18px] font-light leading-[28.6px] tracking-[0.6px]`}
+                >
+                  {productDetails}
+                </p>
+              </div>
             </AccordionContent>
           </AccordionItem>
 

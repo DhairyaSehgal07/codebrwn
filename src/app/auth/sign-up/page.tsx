@@ -7,7 +7,6 @@ import SignUpForm from "@/components/SignUpForm";
 const page = () => {
   return (
     <>
-      <Navbar />
       <main className="mt-14 flex flex-col items-center justify-center">
         <h1
           className={`${outfit.className} text-[32px] font-normal leading-[40.32px] tracking-spaced-06 md:text-5xl lg:text-6xl lg:leading-[80.64px]`}

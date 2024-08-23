@@ -5,7 +5,6 @@ import Navbar from "@/components/common/Navbar";
 const page = () => {
   return (
     <>
-      <Navbar />
       <SignInScreen />
     </>
   );

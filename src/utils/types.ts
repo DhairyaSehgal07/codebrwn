@@ -34,6 +34,7 @@ interface GetCollectionByIdResponse {
 }
 
 export interface Customer {
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -119,3 +120,14 @@ export interface NormalizedProduct {
   createdAt: string;
   updatedAt: string;
 }
+
+export type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  currencyCode: string;
+  compareAtPrice?: string;
+  imageUrl: string;
+  size: string;
+  quantity: number;
+};

@@ -32,33 +32,25 @@ const SingleProductCard = async ({
         <div className="lg:px-16">
           <div className="flex justify-between">
             <span
-              className={`${outfit.className} text-base font-light leading-[19px] tracking-spaced-06`}
+              className={`${outfit.className} font-semibold leading-[19px] tracking-spaced-06 md:text-xl`}
             >
-              {product.title}
+              {product.title.toUpperCase()}
             </span>
             <span
-              className={`${outfit.className} text-base font-medium leading-[19px] tracking-spaced-06 text-[#A2A2A2]`}
+              className={`${outfit.className} font-semibold leading-[19px] tracking-spaced-06 md:text-xl`}
             >
               {product.priceRange.minVariantPrice.currencyCode}{" "}
               {product.priceRange.minVariantPrice.amount}
             </span>
           </div>
 
-          <div className="mt-4 flex items-center justify-center">
-            <p
-              style={{
-                textAlign: "justify", // Align text evenly on both sides
-                hyphens: "auto", // Enable hyphenation for better text wrapping
-              }}
-              className={`${outfit.className} text-center text-[22px] font-light leading-[28.6px] tracking-[0.6px]`}
-            >
-              {product.description}
-            </p>
-          </div>
+          <VariantSelector
+            session={session}
+            variants={product.variants}
+            productName={product.title}
+          />
 
-          <VariantSelector session={session} variants={product.variants} />
-
-          <ProductDetials />
+          <ProductDetials productDetails={product.description} />
 
           <div className="mt-[100px] lg:hidden">
             <h1

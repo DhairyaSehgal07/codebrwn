@@ -2,39 +2,162 @@
 import React, { useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { raleway } from "@/app/fonts";
-import { ProductVariant, Customer } from "@/utils/types";
+import { ProductVariant, CartItem, Customer } from "@/utils/types";
 import { Fira_Mono } from "next/font/google";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { headers } from "@/utils/const";
+
 const fira_mono = Fira_Mono({ weight: "500", subsets: ["latin"] });
+
+interface OldCartData {
+  cart: {
+    cartInfo: {
+      items: CartItem[];
+      totalPrice: number;
+    };
+  };
+  userId: string;
+  success: boolean;
+}
 
 const VariantSelector = ({
   variants,
   session,
+  productName,
 }: {
   variants: ProductVariant[];
   session: Customer;
+  productName: string;
 }) => {
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Loading state for add to cart
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const queryClient = useQueryClient();
 
-  // State to track the currently selected variant
-  const [selectedVariant, setSelectedVariant] = useState<string | null>(
-    searchParams.get("variant") || null,
+  // Defining the mutation
+  const mutation = useMutation({
+    mutationFn: async (cartItem: CartItem) => {
+      const response = await fetch("/api/cart", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({
+          customerId: session.id,
+          item: cartItem,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add item to cart");
+      }
+
+      return response.json();
+    },
+
+    onMutate: async (cartItem: CartItem) => {
+      console.log("Optimistic Update Starting");
+      //CANCEL OUTGOING REFETCHES
+      // so they don't overwrite our optimistic update
+      await queryClient.cancelQueries({ queryKey: ["cart"] });
+
+      // snapshot the previous state
+      const previousCart = queryClient.getQueryData<OldCartData>(["cart"]);
+
+      console.log("previous cart is: ", previousCart);
+      let updatedItems;
+      // do the optmistic update
+      if (previousCart?.cart) {
+        // check if the item already exists in the cart
+        const existingItem =
+          previousCart.cart.cartInfo.items.length > 0
+            ? previousCart.cart.cartInfo.items.find(
+                (item: CartItem) => item.id === cartItem.id,
+              )
+            : null;
+
+        if (existingItem) {
+          updatedItems = previousCart.cart.cartInfo.items.map(
+            (item: CartItem) =>
+              item.id === existingItem.id
+                ? { ...item, quantity: item.quantity + 1 }
+                : item,
+          );
+        } else {
+          updatedItems = [...previousCart.cart.cartInfo.items, cartItem];
+        }
+
+        // RETURN THE NEW OPTIMISTIC CART DATA
+
+        const updatedCardData: OldCartData = {
+          ...previousCart,
+          cart: {
+            ...previousCart.cart,
+            cartInfo: {
+              ...previousCart.cart.cartInfo,
+              items: updatedItems,
+              totalPrice: previousCart.cart.cartInfo.totalPrice
+                ? previousCart.cart.cartInfo.totalPrice + cartItem.price
+                : cartItem.price,
+            },
+          },
+        };
+
+        console.log("Optimistic Update Data:", updatedCardData);
+        queryClient.setQueryData(["cart"], updatedCardData);
+
+        return { previousCart };
+      }
+      return { previousCart };
+    },
+    onError: (error, cartItem, context) => {
+      console.error("Mutation Error:", error);
+      queryClient.setQueryData(["cart"], context?.previousCart);
+      setMessage("An error occurred while adding the item to the cart.");
+    },
+
+    onSettled: () => {
+      console.log("Mutation Settled");
+      queryClient.refetchQueries({ queryKey: ["cart"] });
+      setIsLoading(false); // Reset loading state
+    },
+  });
+
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
+    variants.find((variant) => variant.title === searchParams.get("variant")) ||
+      null,
   );
 
-  const handleVariantClick = (variantTitle: string) => {
-    const currentParams = new URLSearchParams(searchParams.toString());
-    currentParams.set("variant", variantTitle);
+  const handleVariantClick = (variant: ProductVariant) => {
+    setMessage("");
 
-    // Update the selected variant
-    setSelectedVariant(variantTitle);
+    setSelectedVariant(variant);
+  };
 
-    // Push the new URL with updated query parameters
-    router.push(`${pathname}?${currentParams.toString()}`);
+  const handleAddToCart = async (selectedVariant: ProductVariant) => {
+    if (!session) {
+      router.push("/auth/sign-in");
+      return;
+    }
+
+    const cartItem: CartItem = {
+      id: selectedVariant.id,
+      name: productName,
+      price: parseFloat(selectedVariant.priceV2.amount),
+      currencyCode: selectedVariant.priceV2.currencyCode,
+      imageUrl: selectedVariant.image?.url!,
+      size: selectedVariant.selectedOptions[0].value,
+      quantity: 1,
+    };
+
+    // alert(JSON.stringify(cartItem.price));
+
+    mutation.mutate(cartItem);
   };
 
   return (
     <div className="mt-8">
+      {message && <p className="text-red-500">{message}</p>}
       <h1
         className={`${raleway.className} text-start font-medium leading-[14.4px] tracking-spaced-06`}
       >
@@ -44,15 +167,15 @@ const VariantSelector = ({
         <ul className="flex justify-between lg:px-6">
           {variants.map((variant, index) => (
             <li
-              onClick={() => handleVariantClick(variant.title)}
+              onClick={() => handleVariantClick(variant)}
               key={index}
               className={`${
                 variant.currentlyNotInStock
                   ? "text-gray-400 line-through"
                   : "flex h-12 w-12 cursor-pointer items-center justify-center hover:border hover:border-black"
               } ${
-                selectedVariant === variant.title
-                  ? "bg-black text-white" // Active state styles
+                selectedVariant?.title === variant.title
+                  ? "bg-black text-white"
                   : ""
               }`}
             >
@@ -63,11 +186,21 @@ const VariantSelector = ({
       </div>
 
       <div className="mt-8 flex gap-5">
-        <button className="w-full border border-black py-4">
+        <button
+          onClick={() => {
+            selectedVariant
+              ? handleAddToCart(selectedVariant)
+              : setMessage(
+                  "Please choose your preferred options before proceeding.",
+                );
+          }}
+          className="w-full border border-black py-4"
+          disabled={isLoading} // Disable button during loading
+        >
           <span
             className={`${fira_mono.className} leading[14.4px] text-sm tracking-spaced-06`}
           >
-            ADD TO BAG
+            {isLoading ? "ADDING..." : "ADD TO BAG"}
           </span>
         </button>
         <button className="w-full border bg-black py-4">

@@ -44,7 +44,7 @@ const Navbar = () => {
   }`;
 
   const imageUrl =
-    "https://utfs.io/f/eeca5582-97b7-4b70-8374-b3a96d989469-iueuwy.jpg";
+    "https://utfs.io/f/2f8777d4-3b33-4cf4-898a-b9d564454f6b-8cbg0l.jpg";
 
   return (
     <>
@@ -53,7 +53,7 @@ const Navbar = () => {
           <span
             className={`mt-[0.4px] h-6 w-full bg-darkgreen p-2 text-center text-[10px] leading-[10px] tracking-[0.8px] text-white opacity-90 ${fira_mono.className} `}
           >
-            WELCOME TO CODEBRWN!!
+            JOIN THE BROWN COMMUNITY
           </span>
         </div>
       </header>
@@ -181,7 +181,7 @@ const Navbar = () => {
           quality={100}
           priority
         />
-        <section className="absolute left-[74px] top-[460px] mt-32 flex w-full flex-col items-center justify-center p-2 lg:left-[102px]">
+        <section className="absolute left-5 top-[460px] mt-32 flex w-full flex-col items-center justify-center p-2">
           <div className="flex flex-col items-center justify-center">
             <h1
               className={`font-400 h-[116px] w-[408px] items-center whitespace-nowrap text-center text-[24px] leading-[57.6px] tracking-[0.6px] text-[#F7F7F4] ${outfit.className} lg:h-[212px] lg:w-[599px] lg:text-[48px] lg:leading-[105.6px]`}

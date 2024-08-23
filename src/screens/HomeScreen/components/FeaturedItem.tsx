@@ -87,7 +87,7 @@ export async function FeaturedItemTest({
                 FEATURED
               </h2>
               <h1
-                className={`${outfit.className} mt-4 text-center text-[32px] leading-[41.6px] tracking-[0.6px]`}
+                className={`${outfit.className} mt-4 px-1 text-center text-[30px] font-semibold leading-[41.6px] tracking-[0.6px]`}
               >
                 {product.title.toUpperCase()}
               </h1>
@@ -97,7 +97,7 @@ export async function FeaturedItemTest({
                     textAlign: "justify", // Align text evenly on both sides
                     hyphens: "auto", // Enable hyphenation for better text wrapping
                   }}
-                  className={`${outfit.className} w-[382px] px-2 text-center text-[22px] font-light leading-[28.6px] tracking-[0.6px] md:w-auto`}
+                  className={`${outfit.className} w-[382px] px-6 text-center font-light leading-6 tracking-[0.6px] md:w-auto`}
                 >
                   {product.description}
                 </p>
@@ -138,7 +138,7 @@ export async function FeaturedItemTest({
                   FEATURED
                 </h2>
                 <h1
-                  className={`${outfit.className} mt-4 whitespace-nowrap text-center text-[32px] leading-[41.6px] tracking-[0.6px]`}
+                  className={`${outfit.className} mt-4 whitespace-nowrap text-center text-[32px] font-semibold leading-[41.6px] tracking-[0.6px]`}
                 >
                   {product.title.toUpperCase()}
                 </h1>
@@ -148,7 +148,7 @@ export async function FeaturedItemTest({
                       textAlign: "justify", // Align text evenly on both sides
                       hyphens: "auto", // Enable hyphenation for better text wrapping
                     }}
-                    className={`${outfit.className} text-center text-[22px] font-light leading-[28.6px] tracking-[0.6px] lg:w-[450px] 2xl:w-auto`}
+                    className={`${outfit.className} text-center font-light leading-[28.6px] tracking-[0.6px] lg:w-[450px] 2xl:w-auto`}
                   >
                     {product.description}
                   </p>
