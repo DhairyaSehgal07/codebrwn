@@ -78,10 +78,20 @@ export async function generateToken(email: string, password: string) {
     });
 
     if (!res.ok) {
+      if (res.status === 401) {
+        throw new Error("Invalid email or password");
+      }
       throw new Error(`HTTP error! status: ${res.status}`);
     }
 
     const responseData = await res.json();
+
+    if (
+      responseData.errors ||
+      !responseData.data?.customerAccessTokenCreate?.customerAccessToken
+    ) {
+      throw new Error("Invalid email or password");
+    }
 
     const { accessToken, expiresAt } =
       responseData.data.customerAccessTokenCreate.customerAccessToken;
@@ -91,7 +101,7 @@ export async function generateToken(email: string, password: string) {
     await storeToken(accessToken, expiresAt);
   } catch (err: any) {
     logger.error("Error generating token", { error: err.message });
-    throw new Error(`Failed to generate token: ${err.message}`);
+    throw new Error(`Failed to sign in: ${err.message}`);
   }
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { splitProductDetails } from "@/utils/helper";
 import { outfit } from "@/app/fonts";
 import {
   Accordion,
@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 const ProductDetials = ({ productDetails }: { productDetails: string }) => {
+  const { part1, part2 } = splitProductDetails(productDetails);
   return (
     <>
       <section className="mt-24 lg:mt-16">
@@ -39,7 +40,23 @@ const ProductDetials = ({ productDetails }: { productDetails: string }) => {
                   }}
                   className={`${outfit.className} text-center text-[18px] font-light leading-[28.6px] tracking-[0.6px]`}
                 >
-                  {productDetails}
+                  {part1}
+                </p>
+              </div>
+
+              <div className="mt-4 flex flex-col items-center justify-center">
+                <p
+                  style={{
+                    textAlign: "justify", // Align text evenly on both sides
+                    hyphens: "auto", // Enable hyphenation for better text wrapping
+                  }}
+                  className={`${outfit.className} text-center text-[18px] font-light leading-[28.6px] tracking-[0.6px]`}
+                >
+                  <span className="font-bold">Key Features</span>{" "}
+                  {/* Bold heading */}
+                  <br /> {/* Line break */}
+                  {part2.replace("Key Features", "").trim()}{" "}
+                  {/* Continue the paragraph */}
                 </p>
               </div>
             </AccordionContent>

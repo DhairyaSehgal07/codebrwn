@@ -7,6 +7,7 @@ import { outfit } from "@/app/fonts";
 import { Fira_Mono } from "next/font/google";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { formatTitle, extractQuotedText } from "@/utils/helper";
 
 const fira_mono = Fira_Mono({ weight: "500", subsets: ["latin"] });
 
@@ -25,15 +26,13 @@ interface ProductCardProps {
   product: ProductNode;
 }
 
-const formatTitle = (title: string): string => {
-  return title.toLowerCase().replace(/\s+/g, "-");
-};
-
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const currencyCode = product.priceRange.minVariantPrice.currencyCode;
   const currencySymbol = currencySymbols[currencyCode] || currencyCode;
 
-  const formattedTitle = formatTitle(product.title);
+  const title = extractQuotedText(product.title);
+
+  const formattedTitle = formatTitle(title);
 
   return (
     <>
@@ -43,13 +42,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       >
         <div className="group relative">
           <picture className="aspect-h-1 aspect-w-1 lg:aspect-none w-full overflow-hidden hover:opacity-75 lg:h-96">
-            <img src={placeholderImage || product.featuredImage?.url} />
+            <img src={product.featuredImage?.url || placeholderImage} />
           </picture>
           <div className="flex justify-between">
             <span
               className={`${outfit.className} m-2 flex items-center justify-center text-[10px] font-light leading-[9.15px] tracking-spaced-06 md:m-4 md:text-base md:leading-[19.2px]`}
             >
-              {product.title}
+              {title}
             </span>
             <span
               className={`${outfit.className} m-2 flex items-center justify-center text-[10px] font-light leading-[9.15px] tracking-spaced-06 text-[#858585] md:m-4 md:text-base md:leading-[19.2px]`}

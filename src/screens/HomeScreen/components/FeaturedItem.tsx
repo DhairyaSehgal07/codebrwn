@@ -3,7 +3,8 @@ import { API_URL, STOREFRONT_TOKEN } from "@/utils/const";
 import { outfit } from "@/app/fonts";
 import { Fira_Mono } from "next/font/google";
 import Image from "next/image";
-
+import { extractQuotedText, formatTitle } from "@/utils/helper";
+import Link from "next/link";
 const fira_mono = Fira_Mono({ weight: "500", subsets: ["latin"] });
 
 interface FeaturedItemProps {
@@ -66,6 +67,10 @@ export async function FeaturedItemTest({
 
     const product: Product = data.product;
 
+    const title = extractQuotedText(product.title);
+
+    const formattedTitle = formatTitle(title);
+
     return (
       <>
         <div className="w-full bg-[#4C000A] text-white xl:hidden">
@@ -89,7 +94,7 @@ export async function FeaturedItemTest({
               <h1
                 className={`${outfit.className} mt-4 px-1 text-center text-[30px] font-semibold leading-[41.6px] tracking-[0.6px]`}
               >
-                {product.title.toUpperCase()}
+                {title}
               </h1>
               <div className="mt-4 flex items-center justify-center">
                 <p
@@ -103,13 +108,16 @@ export async function FeaturedItemTest({
                 </p>
               </div>
               <div className="flex justify-center">
-                <button className="my-12 h-[54px] w-[168px] gap-[8px] border-[1px] border-white px-6 py-4">
+                <Link
+                  href={`/products/${formattedTitle}`}
+                  className="my-12 flex h-[54px] w-[168px] items-center justify-center gap-[8px] border-[1px] border-white px-6 py-4"
+                >
                   <p
                     className={`${fira_mono.className} text-center text-sm leading-[14.4px] tracking-[0.6px]`}
                   >
                     DISCOVER MORE
                   </p>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -138,9 +146,9 @@ export async function FeaturedItemTest({
                   FEATURED
                 </h2>
                 <h1
-                  className={`${outfit.className} mt-4 whitespace-nowrap text-center text-[32px] font-semibold leading-[41.6px] tracking-[0.6px]`}
+                  className={`${outfit.className} mt-4 text-center text-[32px] font-semibold leading-[41.6px] tracking-[0.6px]`}
                 >
-                  {product.title.toUpperCase()}
+                  {title}
                 </h1>
                 <div className="mt-4 flex items-center justify-center">
                   <p
@@ -154,13 +162,16 @@ export async function FeaturedItemTest({
                   </p>
                 </div>
                 <div className="flex justify-center">
-                  <button className="my-12 h-[54px] w-[168px] gap-[8px] border-[1px] border-white px-6 py-4">
+                  <Link
+                    href={`/products/${formattedTitle}`}
+                    className="my-12 flex h-[54px] w-[168px] items-center justify-center gap-[8px] border-[1px] border-white px-6 py-4"
+                  >
                     <p
                       className={`${fira_mono.className} text-center text-sm leading-[14.4px] tracking-[0.6px]`}
                     >
                       DISCOVER MORE
                     </p>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

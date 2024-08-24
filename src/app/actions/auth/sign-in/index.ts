@@ -19,7 +19,7 @@ export async function onSignInAction(data: Customer): Promise<FormState> {
     const validationIssues = parsed.error.issues.map((issue) => issue.message);
     logger.warn("Sign-in form validation failed", { issues: validationIssues });
     return {
-      message: "Invalid form data",
+      message: "Please fix the errors below and try again.",
       issues: validationIssues,
     };
   }
@@ -32,6 +32,9 @@ export async function onSignInAction(data: Customer): Promise<FormState> {
     return { message: "User signed in successfully" };
   } catch (error: any) {
     logger.error("Error during sign-in process", { error: error.message });
-    return { message: "Failed to sign in user", issues: [error.message] };
+    return {
+      message: "Sign-in failed",
+      issues: [error.message], // Ensure this message is user-friendly
+    };
   }
 }

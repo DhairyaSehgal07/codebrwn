@@ -131,3 +131,14 @@ export type CartItem = {
   size: string;
   quantity: number;
 };
+
+export interface OldCartData {
+  cart: {
+    cartInfo: {
+      items: CartItem[];
+      totalPrice: number;
+    };
+  };
+  userId: string;
+  success: boolean;
+}

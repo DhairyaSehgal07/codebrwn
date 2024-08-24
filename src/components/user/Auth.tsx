@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+"use client";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
@@ -32,7 +32,7 @@ const Auth = () => {
   if (!auth) {
     return (
       <div>
-        <button onClick={() => router.push("auth/sign-in")}>SIGN IN</button>
+        <button onClick={() => router.push("/auth/sign-in")}>SIGN IN</button>
       </div>
     );
   }

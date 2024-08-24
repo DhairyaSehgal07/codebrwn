@@ -13,7 +13,6 @@ import Image from "next/image";
 import Cart from "../user/Cart";
 import Auth from "../user/Auth";
 import Wishlist from "../user/Wishlist";
-import { SessionProvider } from "@/context/SessionContext";
 
 interface MobileSidebarProps {
   isSticky: boolean;
