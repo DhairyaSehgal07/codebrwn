@@ -21,6 +21,7 @@ import { headers } from "@/utils/const";
 import { OldCartData } from "@/utils/types";
 import { useSheet } from "@/context/SheetContext";
 import { throttle } from "lodash";
+import { AddToWishlistSidebar } from "./AddToWIshlistButton";
 
 const placeholderImage = "/product-image-placeholder.svg";
 
@@ -272,101 +273,109 @@ const CartSidebar = ({ data }: { data: any }) => {
             {totalItemsInBag > 0 ? (
               <div>
                 <Card className="mt-6 flex flex-col gap-2 border-none">
-                  {items.map((item, index) => (
-                    <React.Fragment key={item.id || index}>
-                      <section className="flex items-center justify-between">
-                        <h1
-                          className={`${outfit.className} w-7/12 text-xs font-semibold leading-[19px] tracking-[0.3px] sm:text-base`}
-                        >
-                          {item.name}
-                        </h1>
-                        <span
-                          className={`${outfit.className} W-5/12 pr-2 text-xs font-semibold leading-[19px] tracking-[0.3px] sm:text-base`}
-                        >
-                          {item.currencyCode} {item.price}
-                        </span>
-                      </section>
-                      <section className="flex gap-4">
-                        <div className="relative h-[110px] w-[65%] sm:h-[150px] sm:w-1/2">
-                          <Image
-                            src={item.imageUrl || placeholderImage}
-                            alt="Product image"
-                            fill={true}
-                            style={{ objectFit: "cover" }}
+                  {items.map((item, index) => {
+                    const wishlistItem = {
+                      id: item.productId, // Map productId to id
+                      name: item.name,
+                      price: item.price,
+                      currencyCode: item.currencyCode,
+                      imageUrl: item.imageUrl,
+                    };
+                    return (
+                      <React.Fragment key={item.id || index}>
+                        <section className="flex items-center justify-between">
+                          <h1
+                            className={`${outfit.className} w-7/12 text-xs font-semibold leading-[19px] tracking-[0.3px] sm:text-base`}
+                          >
+                            {item.name}
+                          </h1>
+                          <span
+                            className={`${outfit.className} W-5/12 pr-2 text-xs font-semibold leading-[19px] tracking-[0.3px] sm:text-base`}
+                          >
+                            {item.currencyCode} {item.price}
+                          </span>
+                        </section>
+                        <section className="flex gap-4">
+                          <div className="relative h-[110px] w-[65%] sm:h-[150px] sm:w-1/2">
+                            <Image
+                              src={item.imageUrl || placeholderImage}
+                              alt="Product image"
+                              fill={true}
+                              style={{ objectFit: "cover" }}
+                            />
+                          </div>
+
+                          <div className="mt-6 grid w-full grid-cols-2 grid-rows-2 items-start px-2">
+                            <span
+                              className={`${outfit.className} text-xs font-semibold leading-[19px] tracking-[0.3px] sm:mt-2 sm:text-base`}
+                            >
+                              Size
+                            </span>
+                            <div className="shadow-xs flex items-center justify-center rounded-[1.62px] border-[0.2px] sm:py-2">
+                              <span
+                                className={`${outfit.className} text-xs font-medium leading-[19px] tracking-[0.3px] sm:text-base`}
+                              >
+                                {item.size}
+                              </span>
+                            </div>
+
+                            <span
+                              className={`${outfit.className} text-xs font-semibold leading-[19px] tracking-[0.3px] sm:mt-2 sm:text-base`}
+                            >
+                              Qty
+                            </span>
+                            <div className="shadow-xs flex items-center justify-between rounded-[1.62px] border-[0.2px] sm:py-2">
+                              <button
+                                onClick={() =>
+                                  onUpdateQuantityClick(item.id, "DECREMENT")
+                                }
+                                disabled={item.quantity <= 1}
+                                className="rounded px-2"
+                              >
+                                <span
+                                  className={`${outfit.className} text-xs font-medium leading-[19px] tracking-[0.3px] sm:pl-2 sm:text-base`}
+                                >
+                                  -
+                                </span>
+                              </button>
+                              <span
+                                className={`${outfit.className} text-xs font-medium leading-[19px] tracking-[0.3px] sm:text-base`}
+                              >
+                                {item.quantity}
+                              </span>
+                              <button
+                                onClick={() =>
+                                  onUpdateQuantityClick(item.id, "INCREMENT")
+                                }
+                                className="rounded px-2 pt-[2px] sm:pt-[4px]"
+                              >
+                                <span
+                                  className={`${outfit.className} text-xs font-medium leading-[19px] tracking-[0.3px] sm:pr-2 sm:text-base`}
+                                >
+                                  +
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </section>
+
+                        <section className="flex justify-between">
+                          <AddToWishlistSidebar
+                            session={session.data.session}
+                            item={wishlistItem}
                           />
-                        </div>
-
-                        <div className="mt-6 grid w-full grid-cols-2 grid-rows-2 items-start px-2">
-                          <span
-                            className={`${outfit.className} text-xs font-semibold leading-[19px] tracking-[0.3px] sm:mt-2 sm:text-base`}
+                          <button
+                            onClick={() => onRemoveItemClick(item.id)}
+                            className={`${outfit.className} pr-2 text-xs font-semibold leading-[19px] tracking-[0.3px] text-red-500/90 underline sm:text-base`}
                           >
-                            Size
-                          </span>
-                          <div className="shadow-xs flex items-center justify-center rounded-[1.62px] border-[0.2px] sm:py-2">
-                            <span
-                              className={`${outfit.className} text-xs font-medium leading-[19px] tracking-[0.3px] sm:text-base`}
-                            >
-                              {item.size}
-                            </span>
-                          </div>
-
-                          <span
-                            className={`${outfit.className} text-xs font-semibold leading-[19px] tracking-[0.3px] sm:mt-2 sm:text-base`}
-                          >
-                            Qty
-                          </span>
-                          <div className="shadow-xs flex items-center justify-between rounded-[1.62px] border-[0.2px] sm:py-2">
-                            <button
-                              onClick={() =>
-                                onUpdateQuantityClick(item.id, "DECREMENT")
-                              }
-                              disabled={item.quantity <= 1}
-                              className="rounded px-2"
-                            >
-                              <span
-                                className={`${outfit.className} text-xs font-medium leading-[19px] tracking-[0.3px] sm:pl-2 sm:text-base`}
-                              >
-                                -
-                              </span>
-                            </button>
-                            <span
-                              className={`${outfit.className} text-xs font-medium leading-[19px] tracking-[0.3px] sm:text-base`}
-                            >
-                              {item.quantity}
-                            </span>
-                            <button
-                              onClick={() =>
-                                onUpdateQuantityClick(item.id, "INCREMENT")
-                              }
-                              className="rounded px-2 pt-[2px] sm:pt-[4px]"
-                            >
-                              <span
-                                className={`${outfit.className} text-xs font-medium leading-[19px] tracking-[0.3px] sm:pr-2 sm:text-base`}
-                              >
-                                +
-                              </span>
-                            </button>
-                          </div>
-                        </div>
-                      </section>
-
-                      <section className="flex justify-between">
-                        <button
-                          className={`${outfit.className} text-xs font-semibold leading-[19px] tracking-[0.3px] underline sm:text-base`}
-                        >
-                          Add to wishlist
-                        </button>
-                        <button
-                          onClick={() => onRemoveItemClick(item.id)}
-                          className={`${outfit.className} pr-2 text-xs font-semibold leading-[19px] tracking-[0.3px] text-red-500/90 underline sm:text-base`}
-                        >
-                          Remove
-                        </button>
-                      </section>
-                      <section></section>
-                      {index < items.length - 1 && <hr className="mt-2"></hr>}
-                    </React.Fragment>
-                  ))}
+                            Remove
+                          </button>
+                        </section>
+                        <section></section>
+                        {index < items.length - 1 && <hr className="mt-2"></hr>}
+                      </React.Fragment>
+                    );
+                  })}
                 </Card>
               </div>
             ) : (

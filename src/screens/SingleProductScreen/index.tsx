@@ -21,7 +21,8 @@ const SingleProductScreen = async ({ handle }: { handle: string }) => {
     query: `
       query ProductTitle {
         product(handle: "${handle}") {
-            title
+        id
+        title
     description
     featuredImage {
       id

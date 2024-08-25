@@ -3,7 +3,7 @@ import React from "react";
 import { ProductCarousel } from "../ProductCarousel";
 import { outfit } from "@/app/fonts";
 import ProductDetials from "../ProductDetials";
-import { NormalizedProduct } from "@/utils/types";
+import { NormalizedProduct, WishlistItem } from "@/utils/types";
 import ImageGalleryGrid from "../ImageGalleryGrid";
 import VariantSelector from "../VariantSelector";
 import { getSession } from "@/app/actions/auth/common";
@@ -16,6 +16,14 @@ const SingleProductCard = async ({
   const placeholderImage = "/product-image-placeholder.svg";
 
   const session = await getSession();
+
+  const item: WishlistItem = {
+    id: product.id,
+    name: product.title,
+    imageUrl: product.featuredImage?.url!,
+    price: parseFloat(product.priceRange.minVariantPrice.amount),
+    currencyCode: product.priceRange.minVariantPrice.currencyCode,
+  };
 
   return (
     <div className="flex flex-col lg:mt-[72px] lg:flex-row">
@@ -30,7 +38,7 @@ const SingleProductCard = async ({
 
       <section className="mx-6 mt-8 lg:mx-0 lg:w-5/12 lg:text-center">
         <div className="lg:px-16">
-          <div className="flex justify-between">
+          <div className="flex flex-col items-start justify-between gap-4">
             <span
               className={`${outfit.className} font-semibold leading-[19px] tracking-spaced-06 md:text-xl`}
             >
@@ -48,6 +56,7 @@ const SingleProductCard = async ({
             session={session}
             variants={product.variants}
             productName={product.title}
+            item={item}
           />
 
           <ProductDetials productDetails={product.description} />

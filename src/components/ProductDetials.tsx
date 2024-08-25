@@ -22,8 +22,12 @@ const ProductDetials = ({ productDetails }: { productDetails: string }) => {
   return (
     <>
       <section className="mt-24 lg:mt-16">
-        <Accordion type="multiple" className="w-full">
-          <AccordionItem className="border-b-black/60" value="item-1">
+        <Accordion
+          defaultValue={["product-details"]}
+          type="multiple"
+          className="w-full"
+        >
+          <AccordionItem className="border-b-black/60" value="product-details">
             <AccordionTrigger
               className={`${outfit.className} text-[20px] font-bold leading-[24px] text-[#110000]`}
             >

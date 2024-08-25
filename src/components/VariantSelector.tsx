@@ -2,12 +2,19 @@
 import { useState, useCallback } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { raleway } from "@/app/fonts";
-import { ProductVariant, CartItem, Customer, OldCartData } from "@/utils/types";
+import {
+  ProductVariant,
+  CartItem,
+  Customer,
+  OldCartData,
+  WishlistItem,
+} from "@/utils/types";
 import { Fira_Mono } from "next/font/google";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { headers } from "@/utils/const";
 import { throttle } from "lodash";
 import { useSheet } from "@/context/SheetContext";
+import AddToWIshlistButton from "./AddToWIshlistButton";
 
 const fira_mono = Fira_Mono({ weight: "500", subsets: ["latin"] });
 
@@ -15,10 +22,12 @@ const VariantSelector = ({
   variants,
   session,
   productName,
+  item,
 }: {
   variants: ProductVariant[];
   session: Customer;
   productName: string;
+  item: WishlistItem;
 }) => {
   const { sheetTriggerRef } = useSheet();
 
@@ -49,63 +58,57 @@ const VariantSelector = ({
 
     onMutate: async (cartItem: CartItem) => {
       console.log("Optimistic Update Starting");
-      //CANCEL OUTGOING REFETCHES
-      // so they don't overwrite our optimistic update
       await queryClient.cancelQueries({ queryKey: ["cart"] });
 
-      // snapshot the previous state
       const previousCart = queryClient.getQueryData<OldCartData>(["cart"]);
-
-      console.log("previous cart is: ", previousCart);
-      let updatedItems;
-      // do the optmistic update
       if (previousCart?.cart) {
-        // check if the item already exists in the cart
-        const existingItem =
-          previousCart.cart.cartInfo.items.length > 0
-            ? previousCart.cart.cartInfo.items.find(
-                (item: CartItem) => item.id === cartItem.id,
-              )
-            : null;
+        let updatedItems;
+        const existingItemIndex = previousCart.cart.cartInfo.items.findIndex(
+          (item: CartItem) =>
+            item.productId === cartItem.productId &&
+            item.size === cartItem.size,
+        );
 
-        if (existingItem) {
-          updatedItems = previousCart.cart.cartInfo.items.map(
-            (item: CartItem) =>
-              item.id === existingItem.id
-                ? { ...item, quantity: item.quantity + 1 }
-                : item,
-          );
+        if (existingItemIndex !== -1) {
+          // Update the quantity of the existing item directly in the array
+          updatedItems = [...previousCart.cart.cartInfo.items];
+          updatedItems[existingItemIndex] = {
+            ...updatedItems[existingItemIndex],
+            quantity: updatedItems[existingItemIndex].quantity + 1,
+          };
         } else {
+          // Add the item as a new entry in the cart
           updatedItems = [...previousCart.cart.cartInfo.items, cartItem];
         }
 
-        // RETURN THE NEW OPTIMISTIC CART DATA
+        const updatedTotalPrice = updatedItems.reduce(
+          (total, item) => total + item.quantity * item.price,
+          0,
+        );
 
-        const updatedCardData: OldCartData = {
+        const updatedCartData: OldCartData = {
           ...previousCart,
           cart: {
             ...previousCart.cart,
             cartInfo: {
               ...previousCart.cart.cartInfo,
               items: updatedItems,
-              totalPrice: previousCart.cart.cartInfo.totalPrice
-                ? previousCart.cart.cartInfo.totalPrice + cartItem.price
-                : cartItem.price,
+              totalPrice: updatedTotalPrice,
             },
           },
         };
 
-        console.log("Optimistic Update Data:", updatedCardData);
-        queryClient.setQueryData(["cart"], updatedCardData);
-
-        if (sheetTriggerRef.current) {
-          sheetTriggerRef.current.click();
-        }
-
-        return { previousCart };
+        console.log("Optimistic Update Data:", updatedCartData);
+        queryClient.setQueryData(["cart"], updatedCartData);
       }
+
+      if (sheetTriggerRef.current) {
+        sheetTriggerRef.current.click();
+      }
+
       return { previousCart };
     },
+
     onError: (error, cartItem, context) => {
       console.error("Mutation Error:", error);
       queryClient.setQueryData(["cart"], context?.previousCart);
@@ -137,6 +140,7 @@ const VariantSelector = ({
     setIsLoading(false);
 
     const cartItem: CartItem = {
+      productId: item.id,
       id: selectedVariant.id,
       name: productName,
       price: parseFloat(selectedVariant.priceV2.amount),
@@ -160,6 +164,7 @@ const VariantSelector = ({
     setIsLoading(true);
     throttledHandleAddToCart(selectedVariant);
   };
+
   return (
     <div className="mt-8">
       {message && <p className="text-red-500">{message}</p>}
@@ -208,13 +213,8 @@ const VariantSelector = ({
             {isLoading ? "ADDING..." : "ADD TO BAG"}
           </span>
         </button>
-        <button className="w-full border bg-black py-4">
-          <span
-            className={`${fira_mono.className} leading[14.4px] text-sm tracking-spaced-06 text-white`}
-          >
-            ADD TO WISHLIST
-          </span>
-        </button>
+
+        <AddToWIshlistButton item={item} session={session} />
       </div>
     </div>
   );

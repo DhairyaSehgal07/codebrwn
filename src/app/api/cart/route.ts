@@ -312,11 +312,14 @@ export async function DELETE(req: NextRequest) {
 
       if (existingItemIndex !== -1) {
         // Item exists, remove it from the cart
+        const itemToRemove = cartData.cartInfo.items[existingItemIndex];
         const updatedItems = cartData.cartInfo.items.filter(
           (cartItem: any) => cartItem.id !== itemId,
         );
-        const itemPrice = cartData.cartInfo.items[existingItemIndex].price;
-        const updatedTotalPrice = cartData.cartInfo.totalPrice - itemPrice;
+
+        // Update the total price by subtracting price * quantity
+        const itemTotalPrice = itemToRemove.price * itemToRemove.quantity;
+        const updatedTotalPrice = cartData.cartInfo.totalPrice - itemTotalPrice;
 
         // Update the cart document with new items and total price
         transaction.update(cartRef, {

@@ -70,6 +70,7 @@ export interface ProductVariant {
 }
 
 export interface Product {
+  id: string;
   title: string;
   description: string;
   featuredImage: ProductImage | null;
@@ -100,6 +101,7 @@ export interface Product {
 }
 
 export interface NormalizedProduct {
+  id: string;
   title: string;
   description: string;
   featuredImage: ProductImage | null;
@@ -122,6 +124,7 @@ export interface NormalizedProduct {
 }
 
 export type CartItem = {
+  productId: string;
   id: string;
   name: string;
   price: number;
@@ -141,4 +144,21 @@ export interface OldCartData {
   };
   userId: string;
   success: boolean;
+}
+
+export interface WishlistItem {
+  id: string;
+  name: string;
+  price: number;
+  currencyCode: string;
+  compareAtPrice?: string;
+  imageUrl: string;
+}
+
+export interface OldWishlistData {
+  success: boolean;
+  wishlist: {
+    items: WishlistItem[];
+    userId: string;
+  };
 }
