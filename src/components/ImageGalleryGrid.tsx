@@ -20,7 +20,7 @@ const ImageGalleryGrid = ({ images }: { images: ProductImage[] }) => {
       elements.push(
         <div
           key={index}
-          className={`relative flex aspect-[3/4] items-center justify-center ${
+          className={`relative flex aspect-square items-center justify-center ${
             numDivsInRow === 2 ? "col-span-1" : "col-span-2"
           } `}
         >

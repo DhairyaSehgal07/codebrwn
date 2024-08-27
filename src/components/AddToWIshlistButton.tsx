@@ -285,7 +285,7 @@ const AddToWishlistButton = ({
       {isInWishlist ? (
         <button
           onClick={() => throttledHandleAddToWishlist(item)}
-          className="w-full border bg-red-500 py-4"
+          className="w-full border bg-black py-4 text-white"
         >
           <span
             className={`${fira_mono.className} leading[14.4px] text-sm tracking-spaced-06 text-white`}

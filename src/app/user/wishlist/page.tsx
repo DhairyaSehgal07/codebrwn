@@ -1,9 +1,10 @@
 import React from "react";
+import WishlistScreen from "@/screens/WishlistScreen";
 
 const page = () => {
   return (
     <>
-      <div className="text-2xl">this is user wishlist</div>
+      <WishlistScreen />
     </>
   );
 };

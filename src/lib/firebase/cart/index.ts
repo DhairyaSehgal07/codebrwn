@@ -2,12 +2,54 @@ import { db } from "../firebase";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import logger from "@/lib/logger";
 import _ from "lodash"; // Import lodash for debouncing
+import { API_URL, headers } from "@/utils/const";
 
 const extractId = (shopifyId: string): string | null => {
   const match = shopifyId.match(/\/(\d+)$/);
   return match ? match[1] : null;
 };
 
+const checkShopifyCart = async (cartId: string): Promise<number> => {
+  try {
+    const reqBody = {
+      query: `
+        {
+          cart(id: "${cartId}") {
+            lines(first: 10) {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+          }
+        }
+      `,
+    };
+
+    const res = await fetch(API_URL!, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Add other headers if needed
+      },
+      body: JSON.stringify(reqBody),
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    const lines = data.data.cart.lines.edges;
+
+    // Return the length of the lines array
+    return lines.length;
+  } catch (err: any) {
+    console.error("Error getting Shopify cart:", err);
+    throw new Error("Error getting Shopify cart");
+  }
+};
 export const initialiseCart = async (shopifyId: string) => {
   try {
     const userId = extractId(shopifyId);
@@ -31,7 +73,7 @@ export const initialiseCart = async (shopifyId: string) => {
   }
 };
 
-export const getCart = async (shopifyId: string) => {
+export const getCart = async (shopifyId: string): Promise<any> => {
   try {
     logger.info("getCart initiated", { shopifyId });
 
@@ -48,6 +90,35 @@ export const getCart = async (shopifyId: string) => {
 
     if (cartDoc.exists()) {
       const cartData = cartDoc.data();
+
+      // Check if shopifyCartId exists
+      const shopifyCartId = cartData?.shopifyCartId;
+      const shopifyCartExpiry = cartData?.shopifyCartExpiry?.toDate(); // Convert Timestamp to Date
+
+      if (shopifyCartId && shopifyCartExpiry) {
+        const currentDate = new Date();
+
+        // Check if the cart has expired
+        if (currentDate > shopifyCartExpiry) {
+          logger.info("Cart has expired");
+
+          // Check the contents of the Shopify cart
+          const shopifyCartLength = await checkShopifyCart(shopifyCartId);
+
+          if (shopifyCartLength === 0) {
+            logger.info("Shopify cart is empty, clearing Firestore cart");
+
+            // Update Firestore cart document to clear its contents
+            await updateDoc(cartRef, {
+              "cartInfo.items": [], // Clear items array
+              "cartInfo.totalPrice": 0, // Reset total price to 0
+              shopifyCartId: "", // Clear shopifyCartId
+              shopifyCartExpiry: null, // Clear shopifyCartExpiry
+            });
+          }
+        }
+      }
+
       logger.info("Cart found", { userId, cartData });
       return cartData;
     } else {

@@ -143,6 +143,8 @@ export interface OldCartData {
     };
   };
   userId: string;
+  shopifyCartId: string;
+  shopifyCartExpiry: string;
   success: boolean;
 }
 
@@ -162,3 +164,8 @@ export interface OldWishlistData {
     userId: string;
   };
 }
+
+export type LineItem = {
+  merchandiseId: string;
+  quantity: number;
+};

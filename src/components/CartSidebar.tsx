@@ -1,14 +1,14 @@
 import React, { useCallback } from "react";
 import { outfit, fira_mono } from "@/app/fonts";
-import { X } from "lucide-react";
+import { X, LoaderCircle } from "lucide-react";
 import { CartItem } from "@/utils/types";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -17,21 +17,25 @@ import Image from "next/image";
 import { useSession } from "@/hooks/useSession";
 import { useWishlist } from "@/hooks/useWishlist";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { headers } from "@/utils/const";
+import { API_URL, headers } from "@/utils/const";
 import { OldCartData } from "@/utils/types";
 import { useSheet } from "@/context/SheetContext";
 import { throttle } from "lodash";
 import { AddToWishlistSidebar } from "./AddToWIshlistButton";
+import { createCartMutation } from "@/lib/graphql/mutations";
 
 const placeholderImage = "/product-image-placeholder.svg";
 
 const CartSidebar = ({ data }: { data: any }) => {
   const session = useSession();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { sheetTriggerRef } = useSheet();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   // const wishlist = useWishlist();
   const [message, setMessage] = React.useState("");
+  const [isCheckoutDisabled, setIsCheckoutDisabled] = React.useState(false);
 
   {
     /* FOR UPDATE MUTATION */
@@ -64,6 +68,7 @@ const CartSidebar = ({ data }: { data: any }) => {
     },
 
     onMutate: async ({ cartItemId, type }) => {
+      setIsLoading(true);
       await queryClient.cancelQueries({ queryKey: ["cart"] });
 
       const previousCart = queryClient.getQueryData<OldCartData>(["cart"]);
@@ -115,11 +120,18 @@ const CartSidebar = ({ data }: { data: any }) => {
     onError: (error, variables, context) => {
       console.error("Mutation Error:", error);
       queryClient.setQueryData(["cart"], context?.previousCart);
+      // Set the message
       setMessage("Something went wrong, please try again.");
+
+      // Clear the message after 5 seconds (5000 milliseconds)
+      setTimeout(() => {
+        setMessage("");
+      }, 5000);
     },
 
     onSettled: () => {
       queryClient.refetchQueries({ queryKey: ["cart"] });
+      setIsLoading(false);
     },
   });
 
@@ -168,6 +180,7 @@ const CartSidebar = ({ data }: { data: any }) => {
     },
 
     onMutate: async (cartItemId: string) => {
+      setIsLoading(true);
       // Cancel outgoing refetches so they don't overwrite our optimistic update
       await queryClient.cancelQueries({ queryKey: ["cart"] });
 
@@ -209,11 +222,18 @@ const CartSidebar = ({ data }: { data: any }) => {
       console.error("Mutation Error:", error);
       // Revert to the previous state if the mutation fails
       queryClient.setQueryData(["cart"], context?.previousCart);
+      // Set the message
       setMessage("Something went wrong, please try again.");
+
+      // Clear the message after 5 seconds (5000 milliseconds)
+      setTimeout(() => {
+        setMessage("");
+      }, 5000);
     },
     onSettled: () => {
       // Refetch the cart after the mutation
       queryClient.refetchQueries({ queryKey: ["cart"] });
+      setIsLoading(false);
     },
   });
 
@@ -241,6 +261,61 @@ const CartSidebar = ({ data }: { data: any }) => {
   const totalItemsInBag = items.reduce((total: number, item: CartItem) => {
     return total + item.quantity;
   }, 0);
+
+  // Handle checkout function
+  const handleCheckout = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("/api/cart/checkout", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          customerId: session.data.session.id,
+          items: items,
+          email: session.data.session.email,
+          countryCode: "IN",
+        }),
+      });
+
+      if (!res.ok) {
+        console.log("Some error occurred while creating checkout");
+        return;
+      }
+
+      const result = await res.json();
+
+      // Extract the checkoutUrl from the response
+      const checkoutUrl = result.data?.data?.cartCreate?.cart?.checkoutUrl;
+
+      if (checkoutUrl) {
+        // Redirect to the checkout URL
+        await router.push(checkoutUrl);
+      } else {
+        console.log("Checkout URL not found in the response");
+      }
+
+      return result;
+    } catch (err: any) {
+      throw new Error("Failed to create cart");
+    } finally {
+      setTimeout(() => {
+        setIsCheckoutDisabled(false);
+      }, 1000);
+    }
+  };
+
+  // Throttle the handleCheckout function with a 1-second delay
+  const throttledHandleCheckout = useCallback(
+    throttle(handleCheckout, 5000), // 1000ms (1 second) throttle delay
+    [session, items], // Dependencies
+  );
+
+  // Usage in your component
+  const onCheckoutClick = (e: any) => {
+    setIsCheckoutDisabled(true);
+    throttledHandleCheckout(e);
+  };
 
   return (
     <>
@@ -361,7 +436,7 @@ const CartSidebar = ({ data }: { data: any }) => {
 
                         <section className="flex justify-between">
                           <AddToWishlistSidebar
-                            session={session.data.session}
+                            session={session?.data?.session}
                             item={wishlistItem}
                           />
                           <button
@@ -393,7 +468,7 @@ const CartSidebar = ({ data }: { data: any }) => {
                 <span
                   className={`${outfit.className} text-xs font-light leading-[6px] tracking-spaced-06 text-[#838383] sm:text-sm`}
                 >
-                  Shipping & taxes
+                  Shipping
                 </span>
                 <span
                   className={`${outfit.className} text-xs font-light leading-[6px] tracking-spaced-06 text-[#838383] sm:text-sm`}
@@ -411,17 +486,35 @@ const CartSidebar = ({ data }: { data: any }) => {
                   className={`${outfit.className} font-semibold leading-[6px] tracking-spaced-06 sm:text-lg`}
                 >
                   {items[0].currencyCode} {data.cart.cartInfo.totalPrice}
+                  <br></br>
+                  <span
+                    className={`${outfit.className} text-xs font-light leading-[6px] tracking-spaced-06 text-[#838383] sm:text-sm`}
+                  >
+                    (Including taxes)
+                  </span>
                 </span>
               </div>
               <SheetClose className="mt-6 w-full" asChild>
                 <button
-                  className="flex h-10 w-full items-center justify-center rounded-none bg-[#195514] py-2 text-white sm:h-auto sm:py-4"
+                  onClick={onCheckoutClick}
+                  disabled={isCheckoutDisabled}
+                  className={`flex h-10 w-full items-center justify-center rounded-none ${isLoading ? "bg-[#195514]/50" : "bg-[#195514]"} py-2 text-white sm:h-auto sm:py-4`}
                   type="submit"
                 >
                   <span
                     className={`${fira_mono.className} text-sm font-bold leading-[22px] tracking-spaced-06`}
                   >
-                    CHECKOUT
+                    {isCheckoutDisabled ? (
+                      <>
+                        <LoaderCircle
+                          className="animate-spin"
+                          size={28}
+                          strokeWidth={2}
+                        />
+                      </>
+                    ) : (
+                      <>CHECKOUT</>
+                    )}
                   </span>
                 </button>
               </SheetClose>

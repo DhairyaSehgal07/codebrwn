@@ -210,7 +210,7 @@ const VariantSelector = ({
           <span
             className={`${fira_mono.className} leading[14.4px] text-sm tracking-spaced-06`}
           >
-            {isLoading ? "ADDING..." : "ADD TO BAG"}
+            {isLoading ? "ADDING..." : "ADD TO CART"}
           </span>
         </button>
 

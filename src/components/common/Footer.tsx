@@ -55,7 +55,7 @@ const Footer = () => {
               SHOP
             </h1>
             <ul className="list-none space-y-4">
-              <li
+              {/* <li
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
                 T-shirt
@@ -64,17 +64,13 @@ const Footer = () => {
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
                 Hoodies
-              </li>
+              </li> */}
               <li
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
                 Shirts
               </li>
-              <li
-                className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
-              >
-                Socks
-              </li>
+
               <li
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
@@ -180,7 +176,7 @@ const Footer = () => {
               SHOP
             </h1>
             <ul className="list-none space-y-4">
-              <li
+              {/* <li
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
                 T-shirt
@@ -189,17 +185,13 @@ const Footer = () => {
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
                 Hoodies
-              </li>
+              </li> */}
               <li
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
                 Shirts
               </li>
-              <li
-                className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
-              >
-                Socks
-              </li>
+
               <li
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
