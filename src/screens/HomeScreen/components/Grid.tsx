@@ -131,7 +131,7 @@ const Grid = () => {
               src={tshirtsUrl}
               alt="Image 1"
               fill={true}
-              objectFit="cover"
+              style={{ objectFit: "cover" }}
               quality={100}
               priority
             />
@@ -161,7 +161,7 @@ const Grid = () => {
               src={capsUrl}
               alt="Image 1"
               fill={true}
-              objectFit="cover"
+              style={{ objectFit: "cover" }}
               quality={100}
               priority
             />
@@ -194,7 +194,7 @@ const Grid = () => {
               src={bagsUrl}
               alt="Image 1"
               fill={true}
-              objectFit="cover"
+              style={{ objectFit: "cover" }}
               quality={100}
               priority
             />

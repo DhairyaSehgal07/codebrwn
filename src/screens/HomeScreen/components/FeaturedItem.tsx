@@ -3,7 +3,11 @@ import { API_URL, STOREFRONT_TOKEN } from "@/utils/const";
 import { outfit } from "@/app/fonts";
 import { Fira_Mono } from "next/font/google";
 import Image from "next/image";
-import { extractQuotedText, formatTitle } from "@/utils/helper";
+import {
+  extractQuotedText,
+  formatTitle,
+  splitProductDetails,
+} from "@/utils/helper";
 import Link from "next/link";
 const fira_mono = Fira_Mono({ weight: "500", subsets: ["latin"] });
 
@@ -71,6 +75,8 @@ export async function FeaturedItemTest({
 
     const formattedTitle = formatTitle(title);
 
+    const { part1, part2 } = splitProductDetails(product.description);
+
     return (
       <>
         <div className="w-full bg-[#4C000A] text-white xl:hidden">
@@ -104,7 +110,7 @@ export async function FeaturedItemTest({
                   }}
                   className={`${outfit.className} w-[382px] px-6 text-center font-light leading-6 tracking-[0.6px] md:w-auto`}
                 >
-                  {product.description}
+                  {part1}
                 </p>
               </div>
               <div className="flex justify-center">
@@ -158,7 +164,7 @@ export async function FeaturedItemTest({
                     }}
                     className={`${outfit.className} text-center font-light leading-[28.6px] tracking-[0.6px] lg:w-[450px] 2xl:w-auto`}
                   >
-                    {product.description}
+                    {part1}
                   </p>
                 </div>
                 <div className="flex justify-center">

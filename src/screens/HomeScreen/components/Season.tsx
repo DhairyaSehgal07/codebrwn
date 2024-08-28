@@ -76,7 +76,7 @@ const Season = ({ title, description }: SeasonProps) => {
               src={pcLogo}
               alt=""
               fill={true}
-              objectFit="cover"
+              style={{ objectFit: "cover" }}
               quality={100}
               priority
             />

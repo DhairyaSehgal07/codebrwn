@@ -105,11 +105,11 @@ const Footer = () => {
               >
                 Track Your Order
               </li>
-              <li
+              {/* <li
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
                 FAQs
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -227,11 +227,11 @@ const Footer = () => {
               >
                 Track your order
               </li>
-              <li
+              {/* <li
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
                 FAQs
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="flex flex-col">

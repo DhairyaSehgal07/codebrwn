@@ -26,6 +26,7 @@ export async function Products({ id }: ProductProps) {
       method: "POST",
       headers: headers,
       body: JSON.stringify(reqBody),
+      next: { revalidate: 1800 },
     });
 
     if (!response.ok) {
