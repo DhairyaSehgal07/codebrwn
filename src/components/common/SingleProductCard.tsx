@@ -7,14 +7,13 @@ import { NormalizedProduct, WishlistItem } from "@/utils/types";
 import ImageGalleryGrid from "../ImageGalleryGrid";
 import VariantSelector from "../VariantSelector";
 import { getSession } from "@/app/actions/auth/common";
+import ProductView from "./ProductView";
 
 const SingleProductCard = async ({
   product,
 }: {
   product: NormalizedProduct;
 }) => {
-  const placeholderImage = "/product-image-placeholder.svg";
-
   const session = await getSession();
 
   const item: WishlistItem = {
@@ -26,42 +25,46 @@ const SingleProductCard = async ({
   };
 
   return (
-    <div className="flex flex-col lg:mt-[72px] lg:flex-row">
-      {/* Mobile View */}
+    <>
+      <div className="flex flex-col lg:mt-[72px] lg:flex-row">
+        {/* Mobile View */}
 
-      <ProductCarousel images={product.images} />
+        <ProductCarousel images={product.images} />
 
-      {/* Desktop View */}
-      <div className="hidden lg:block lg:w-7/12">
-        <ImageGalleryGrid images={product.images} />
-      </div>
+        {/* Desktop View */}
+        <div className="hidden lg:block lg:w-7/12">
+          <ImageGalleryGrid images={product.images} />
+        </div>
 
-      <section className="mx-6 mt-8 lg:mx-0 lg:w-5/12 lg:text-center">
-        <div className="lg:px-16">
-          <div className="flex flex-col items-start justify-between gap-4">
-            <span
-              className={`${outfit.className} font-semibold leading-[19px] tracking-spaced-06 md:text-xl`}
-            >
-              {product.title.toUpperCase()}
-            </span>
-            <span
-              className={`${outfit.className} font-semibold leading-[19px] tracking-spaced-06 md:text-xl`}
-            >
-              {product.priceRange.minVariantPrice.currencyCode}{" "}
-              {product.priceRange.minVariantPrice.amount}
-            </span>
-          </div>
+        <section className="mx-6 mt-8 lg:mx-0 lg:w-5/12 lg:text-center">
+          <div className="lg:px-16">
+            <div className="flex flex-col items-start justify-between gap-4">
+              <span
+                className={`${outfit.className} font-semibold leading-[19px] tracking-spaced-06 md:text-xl`}
+              >
+                {product.title.toUpperCase()}
+              </span>
+              <span
+                className={`${outfit.className} font-semibold leading-[19px] tracking-spaced-06 md:text-xl`}
+              >
+                {product.priceRange.minVariantPrice.currencyCode}{" "}
+                {product.priceRange.minVariantPrice.amount}
+              </span>
+            </div>
 
-          <VariantSelector
-            session={session}
-            variants={product.variants}
-            productName={product.title}
-            item={item}
-          />
+            <VariantSelector
+              session={session}
+              variants={product.variants}
+              productName={product.title}
+              item={item}
+            />
 
-          <ProductDetials productDetails={product.description} />
+            <ProductDetials
+              productType={product.productType}
+              productDetails={product.description}
+            />
 
-          <div className="mt-[100px] lg:hidden">
+            {/* <div className="mt-[100px] lg:hidden">
             <h1
               className={`${outfit.className} text-[24px] leading-[30px] tracking-[0.84px] text-[#000000]`}
             >
@@ -113,10 +116,16 @@ const SingleProductCard = async ({
                 <div className="mt-2 text-center">Product 4</div>
               </div>
             </div>
+          </div> */}
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+
+      <ProductView
+        title={"YOU MAY ALSO LIKE"}
+        id={"gid://shopify/Collection/306787156148"}
+      />
+    </>
   );
 };
 

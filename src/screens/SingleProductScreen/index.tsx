@@ -24,6 +24,7 @@ const SingleProductScreen = async ({ handle }: { handle: string }) => {
         id
         title
     description
+    handle
     featuredImage {
       id
       height

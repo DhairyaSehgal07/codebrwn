@@ -17,12 +17,12 @@ const HomeScreen = async () => {
         title={"SS24 COLLECTION"}
         id={"gid://shopify/Collection/306787156148"}
       />
-      <Collection
+      {/* <Collection
         title={"SUMMER'24 COLLECTION"}
         description={
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
         }
-      />
+      /> */}
       <Season
         title={"FALL 2024"}
         description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius,

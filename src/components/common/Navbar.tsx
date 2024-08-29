@@ -38,13 +38,13 @@ const Navbar = () => {
   const imageClass = pathname == "/" ? "/group-5286.svg" : "/cb-nav.svg";
 
   const imagePositionClass = `z-1 relative bottom-[78px] h-[906px] w-full ${
-    ["/", "/new-in", "/about-us"].includes(pathname)
+    ["/"].includes(pathname)
       ? `${pathname === "/" ? "lg:bottom-[78px]" : "lg:inset-0 lg:bottom-0 h-[655px]"}`
       : "hidden"
   }`;
 
   const imageUrl =
-    "https://utfs.io/f/2f8777d4-3b33-4cf4-898a-b9d564454f6b-8cbg0l.jpg";
+    "https://utfs.io/f/87d2e7ff-2359-4ca7-9a20-3f189d3ef7bb-1bv9ak.jpg";
 
   return (
     <>
@@ -104,6 +104,13 @@ const Navbar = () => {
                 {/* Left Container */}
                 <div className="mx-auto flex flex-1 items-center justify-center">
                   <ul className="flex items-center space-x-12">
+                    <Link href="/">
+                      <li
+                        className={`${fira_mono.className} nav-link relative cursor-pointer whitespace-nowrap text-xs leading-[14.4px] tracking-spaced-06 ${isSticky ? "text-[#000000]" : textClass} `}
+                      >
+                        HOME
+                      </li>
+                    </Link>
                     <Link href="/new-in">
                       <li
                         className={`${fira_mono.className} nav-link relative cursor-pointer whitespace-nowrap text-xs leading-[14.4px] tracking-spaced-06 ${isSticky ? "text-[#000000]" : textClass} `}
@@ -116,13 +123,6 @@ const Navbar = () => {
                         className={`${fira_mono.className} nav-link relative cursor-pointer whitespace-nowrap text-xs leading-[14.4px] tracking-spaced-06 ${isSticky ? "text-[#000000]" : textClass} `}
                       >
                         ABOUT US
-                      </li>
-                    </Link>
-                    <Link href="/ss24-collection">
-                      <li
-                        className={`${fira_mono.className} nav-link relative cursor-pointer whitespace-nowrap text-xs leading-[14.4px] tracking-spaced-06 ${isSticky ? "text-[#000000]" : textClass} `}
-                      >
-                        SS24 COLLECTION
                       </li>
                     </Link>
                   </ul>

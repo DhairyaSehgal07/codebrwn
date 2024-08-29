@@ -488,7 +488,7 @@ const CartSidebar = ({ data }: { data: any }) => {
                   {items[0].currencyCode} {data.cart.cartInfo.totalPrice}
                   <br></br>
                   <span
-                    className={`${outfit.className} text-xs font-light leading-[6px] tracking-spaced-06 text-[#838383] sm:text-sm`}
+                    className={`${outfit.className} mt-4 text-xs font-light leading-[6px] tracking-spaced-06 text-[#838383] sm:text-sm md:mt-0 md:pt-0`}
                   >
                     (Including taxes)
                   </span>

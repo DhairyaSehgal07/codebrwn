@@ -88,9 +88,18 @@ export function MobileSidebar({ isSticky, pathname }: MobileSidebarProps) {
           <main className="flex flex-1 flex-col items-center justify-center">
             <ul className="flex flex-col items-center justify-center">
               <SheetClose asChild>
-                <Link href="/new-in">
+                <Link href="/">
                   <li
                     className={`${fira_mono.className} relative cursor-pointer whitespace-nowrap text-center text-2xl leading-[28.8px] tracking-spaced-06 text-[#000000]`}
+                  >
+                    HOME
+                  </li>
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link href="/new-in">
+                  <li
+                    className={`${fira_mono.className} relative mt-6 cursor-pointer whitespace-nowrap text-center text-2xl leading-[28.8px] tracking-spaced-06 text-[#000000]`}
                   >
                     NEW IN
                   </li>
@@ -102,15 +111,6 @@ export function MobileSidebar({ isSticky, pathname }: MobileSidebarProps) {
                     className={`${fira_mono.className} relative mt-6 cursor-pointer whitespace-nowrap text-center text-2xl leading-[28.8px] tracking-spaced-06 text-[#000000]`}
                   >
                     ABOUT US
-                  </li>
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Link href="/new-in">
-                  <li
-                    className={`${fira_mono.className} relative mt-6 cursor-pointer whitespace-nowrap text-center text-2xl leading-[28.8px] tracking-spaced-06 text-[#000000]`}
-                  >
-                    SS24 COLLECTION
                   </li>
                 </Link>
               </SheetClose>

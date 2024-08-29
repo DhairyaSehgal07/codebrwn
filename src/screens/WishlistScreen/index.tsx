@@ -9,6 +9,7 @@ import { extractQuotedText, formatTitle } from "@/utils/helper";
 import Link from "next/link";
 import { Fira_Mono } from "next/font/google";
 import RemoveFromWishlistButton from "@/components/RemoveFromWishlistButton";
+import AddToWishlistButton from "@/components/AddToWIshlistButton";
 
 const fira_mono = Fira_Mono({ weight: "500", subsets: ["latin"] });
 
@@ -45,7 +46,7 @@ const ProductCard = ({
         </div>
       </Link>
 
-      <RemoveFromWishlistButton />
+      <RemoveFromWishlistButton session={session} item={product} />
     </>
   );
 };
@@ -83,7 +84,7 @@ const WishlistScreen = async () => {
             <h1
               className={`${outfit.className} text-center text-[32px] font-medium leading-[38.4px] tracking-spaced-06`}
             >
-              {"WISHLIST"}
+              {"YOUR WISHLIST"}
             </h1>
           </header>
         </section>

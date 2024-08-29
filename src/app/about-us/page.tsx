@@ -1,7 +1,12 @@
+import AboutUsScreen from "@/screens/AboutUsScreen/AboutUsScreen";
 import React from "react";
 
 const page = () => {
-  return <div>page</div>;
+  return (
+    <>
+      <AboutUsScreen />
+    </>
+  );
 };
 
 export default page;

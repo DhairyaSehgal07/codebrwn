@@ -104,6 +104,7 @@ export interface NormalizedProduct {
   id: string;
   title: string;
   description: string;
+  descriptionHtml?: string;
   featuredImage: ProductImage | null;
   images: ProductImage[];
   priceRange: {

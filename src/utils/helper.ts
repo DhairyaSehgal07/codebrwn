@@ -12,18 +12,82 @@ export const extractId = (shopifyId: string): string | null => {
   return match ? match[1] : null;
 };
 
-// Function to split product details into two parts
 export const splitProductDetails = (details: string) => {
-  const keyFeaturesIndex = details.indexOf("Key Features");
+  // Define the regex patterns for the delimiters
+  const keyFeaturesPattern = /Key Features\*/i;
+  const compositionPattern = /Composition\*/i;
+  const washCarePattern = /Wash Care\*/i;
+  const garmentCarePattern = /Garment Care\*/i;
 
-  if (keyFeaturesIndex === -1) {
-    // If "Key Features" is not found, return the whole string as the first part and an empty second part
-    return { part1: details, part2: "" };
-  }
+  // Find the index of each section
+  const keyFeaturesIndex = details.search(keyFeaturesPattern);
+  const compositionIndex = details.search(compositionPattern);
+  const washCareIndex = details.search(washCarePattern);
+  const garmentCareIndex = details.search(garmentCarePattern);
 
-  // Split the string into two parts: before and after "Key Features"
-  const part1 = details.substring(0, keyFeaturesIndex).trim();
-  const part2 = details.substring(keyFeaturesIndex).trim();
+  // Extract the description part
+  const description =
+    keyFeaturesIndex !== -1
+      ? details.substring(0, keyFeaturesIndex).trim()
+      : details.trim(); // If no "Key Features" found, the whole string is the description
 
-  return { part1, part2 };
+  // Helper function to extract a section of the details
+  const extractSection = (startIndex: number, endIndex: number) => {
+    if (startIndex === -1) return "";
+    if (endIndex === -1) return details.substring(startIndex).trim();
+    return details.substring(startIndex, endIndex).trim();
+  };
+
+  // Extract each section based on the indexes
+  const keyFeaturesPart = extractSection(
+    keyFeaturesIndex !== -1
+      ? keyFeaturesIndex + keyFeaturesPattern.source.length
+      : -1,
+    compositionIndex !== -1
+      ? compositionIndex
+      : washCareIndex !== -1
+        ? washCareIndex
+        : garmentCareIndex !== -1
+          ? garmentCareIndex
+          : -1,
+  );
+
+  const compositionPart = extractSection(
+    compositionIndex !== -1
+      ? compositionIndex + compositionPattern.source.length
+      : -1,
+    washCareIndex !== -1
+      ? washCareIndex
+      : garmentCareIndex !== -1
+        ? garmentCareIndex
+        : -1,
+  );
+
+  const washCarePart = extractSection(
+    washCareIndex !== -1 ? washCareIndex + washCarePattern.source.length : -1,
+    garmentCareIndex !== -1 ? garmentCareIndex : -1,
+  );
+
+  const garmentCarePart = extractSection(
+    garmentCareIndex !== -1
+      ? garmentCareIndex + garmentCarePattern.source.length
+      : -1,
+    -1,
+  );
+
+  // Helper function to convert sections to list items
+  const convertToList = (section: string) => {
+    return section
+      .split(/,\s*|\n+/) // Split by ", " or newline
+      .map((item) => item.trim()) // Trim each item
+      .filter((item) => item.length > 0); // Remove empty items
+  };
+
+  return {
+    description,
+    keyFeatures: convertToList(keyFeaturesPart),
+    composition: convertToList(compositionPart),
+    washCare: convertToList(washCarePart),
+    garmentCare: convertToList(garmentCarePart),
+  };
 };

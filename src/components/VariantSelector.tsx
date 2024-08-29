@@ -37,8 +37,6 @@ const VariantSelector = ({
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
 
-  console.log(variants);
-
   // Defining the mutation
   const mutation = useMutation({
     mutationFn: async (cartItem: CartItem) => {
