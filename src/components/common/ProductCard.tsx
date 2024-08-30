@@ -36,15 +36,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <>
-      <Link
-        href={`/products/${formattedTitle}`}
-        className="ease-in-quad cursor-pointer transition-all duration-150 hover:z-10 hover:scale-[1.02] hover:border-[0.5px] hover:border-black focus-visible:scale-[1.02] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-      >
-        <div className="group relative">
-          <picture className="aspect-h-1 aspect-w-1 lg:aspect-none w-full overflow-hidden hover:opacity-75 lg:h-96">
-            <img src={product.featuredImage?.url || placeholderImage} />
-          </picture>
-          <div className="flex justify-between">
+      <Card className="ease-in-quad cursor-pointer overflow-hidden rounded-none transition-all duration-150 hover:z-10 hover:scale-[1.02] hover:border-[0.5px] hover:border-black focus-visible:scale-[1.02] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0">
+        <Link href={`/products/${formattedTitle}`} className="">
+          <div className="relative aspect-[4/5] w-full">
+            <Image
+              src={product.featuredImage?.url || placeholderImage}
+              alt="Product image"
+              layout="fill"
+              style={{ objectFit: "contain" }}
+              className="object-cover"
+            />
+          </div>
+          <div className="flex justify-between p-2">
             <span
               className={`${outfit.className} m-2 flex items-center justify-center text-[10px] font-light leading-[9.15px] tracking-spaced-06 md:m-4 md:text-base md:leading-[19.2px]`}
             >
@@ -57,8 +60,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               {product.priceRange.minVariantPrice.amount}
             </span>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </Card>
     </>
   );
 };

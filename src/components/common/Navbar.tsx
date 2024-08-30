@@ -43,8 +43,11 @@ const Navbar = () => {
       : "hidden"
   }`;
 
+  const mobileImageUrl =
+    "https://utfs.io/f/f3c4d802-e652-4b7f-a48a-fe32205765ed-pj3z2.jpg";
+
   const imageUrl =
-    "https://utfs.io/f/87d2e7ff-2359-4ca7-9a20-3f189d3ef7bb-1bv9ak.jpg";
+    "https://utfs.io/f/4df26a87-28fb-44c8-8e33-d009d0b2d8fb-vp9a4m.jpg";
 
   return (
     <>
@@ -172,32 +175,50 @@ const Navbar = () => {
           </div>
         </section>
       </nav>
-      <div className={` ${imagePositionClass}`}>
-        <Image
-          src={imageUrl}
-          alt=""
-          fill={true}
-          style={{ objectFit: "cover" }}
-          quality={100}
-          priority
-        />
-        <section className="absolute left-5 top-[460px] mt-32 flex w-full flex-col items-center justify-center p-2">
-          <div className="flex flex-col items-center justify-center">
-            <h1
-              className={`font-400 h-[116px] w-[408px] items-center whitespace-nowrap text-center text-[24px] leading-[57.6px] tracking-[0.6px] text-[#F7F7F4] ${outfit.className} lg:h-[212px] lg:w-[599px] lg:text-[48px] lg:leading-[105.6px]`}
-            >
-              {"IT'S A PERSPECTIVE"}
-            </h1>
-            {/* <button className="border-1 mt-6 flex h-[46px] w-60 items-center justify-center gap-[8px] border-[#F7F7F4] bg-[#F7F7F4] px-6 py-4 text-black">
-              <span
-                className={`${fira_mono.className} text-center text-[12px] leading-[14.4px] tracking-[0.6px]`}
+
+      {pathname === "/" && (
+        <div className={`hidden md:block ${imagePositionClass}`}>
+          <Image
+            src={imageUrl}
+            alt=""
+            fill={true}
+            style={{ objectFit: "cover" }}
+            quality={100}
+            priority
+          />
+          <section className="absolute left-1 top-[160px] mt-32 flex w-full flex-col items-center justify-center p-2 md:left-0">
+            <div className="flex flex-col items-center justify-center">
+              <h1
+                className={`h-[116px] w-[408px] items-center whitespace-nowrap text-center text-[24px] font-medium leading-[57.6px] tracking-[0.6px] text-[#F7F7F4] ${outfit.className} lg:h-[212px] lg:w-[599px] lg:text-[48px] lg:leading-[105.6px]`}
               >
-                EXPLORE NEW COLLECTION
-              </span>
-            </button> */}
-          </div>
-        </section>
-      </div>
+                {"IT'S A PERSPECTIVE"}
+              </h1>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {pathname === "/" && (
+        <div className={`md:hidden ${imagePositionClass}`}>
+          <Image
+            src={mobileImageUrl}
+            alt=""
+            fill={true}
+            style={{ objectFit: "cover" }}
+            quality={100}
+            priority
+          />
+          <section className="absolute left-1 top-[160px] mt-32 flex w-full flex-col items-center justify-center p-2 md:left-0">
+            <div className="flex flex-col items-center justify-center">
+              <h1
+                className={`h-[116px] w-[408px] items-center whitespace-nowrap text-center text-2xl font-medium leading-[57.6px] tracking-[0.6px] text-[#F7F7F4] ${outfit.className} lg:h-[212px] lg:w-[599px] lg:text-[48px] lg:leading-[105.6px]`}
+              >
+                {"IT'S A PERSPECTIVE"}
+              </h1>
+            </div>
+          </section>
+        </div>
+      )}
     </>
   );
 };

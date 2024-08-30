@@ -25,8 +25,7 @@ const HomeScreen = async () => {
       /> */}
       <Season
         title={"FALL 2024"}
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius,
-              blanditiis? Eveniet iste repellendus dolores incidunt aspernatur"
+        description="To some people we are as nice as we could be but for some we end up turning into villains. Why are human emotions so extreme? Meeting in the middle is called diplomacy but diplomacy is for the smart ones. So how am I suppose to balance my smartness with emotions ? No wonder therapy has become a necessity."
       />
       <Suspense fallback={null}>
         <FeaturedItem id={featuredItem} />

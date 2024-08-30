@@ -9,7 +9,7 @@ interface SeasonProps {
 
 const Season = ({ title, description }: SeasonProps) => {
   const imageUrl1 =
-    "https://utfs.io/f/37454d4e-6a85-47b1-bcc4-2f6198774c29-7lsom2.png";
+    "https://utfs.io/f/e63f1e76-9220-48bc-abca-544277a44e25-6mkout.jpg";
   const mobileLogo =
     "https://utfs.io/f/78001dc2-a210-461c-8e1a-716755932c8f-rntaq9.png";
 
@@ -41,15 +41,19 @@ const Season = ({ title, description }: SeasonProps) => {
               priority
             />
           </div>
-          <div className="absolute bottom-0 left-0 right-0 top-0 flex flex-col items-center justify-center">
+          <div className="absolute bottom-16 left-0 right-0 top-0 flex flex-col items-center justify-center">
             <h1
-              className={`${outfit.className} mt-[44px] text-sm font-bold leading-[15.6px] tracking-[0.6px] text-[#9D9D9D]`}
+              className={`${outfit.className} text-sm font-bold leading-[15.6px] tracking-[0.6px] text-[#9D9D9D]`}
             >
               {title}
             </h1>
 
             <p
-              className={`${outfit.className} mt-4 h-[130px] w-[370px] text-center text-xl font-normal leading-[26px] tracking-[0.6px]`}
+              style={{
+                textAlign: "justify", // Align text evenly on both sides
+                hyphens: "auto", // Enable hyphenation for better text wrapping
+              }}
+              className={`${outfit.className} mt-4 h-[130px] w-[370px] px-6 text-center text-xl font-normal leading-[26px] tracking-[0.6px]`}
             >
               {description}
             </p>
@@ -88,6 +92,10 @@ const Season = ({ title, description }: SeasonProps) => {
               {title}
             </h2>
             <p
+              style={{
+                textAlign: "justify", // Align text evenly on both sides
+                hyphens: "auto", // Enable hyphenation for better text wrapping
+              }}
               className={`${outfit.className} mt-6 items-center text-[20px] leading-[26px] tracking-[0.6px] text-[#000000]`}
             >
               {description}

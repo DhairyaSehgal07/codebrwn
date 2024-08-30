@@ -3,10 +3,13 @@ import HeroBackground from "@/components/common/HeroBackground";
 import React from "react";
 import { outfit } from "@/app/fonts";
 
+const imageUrl =
+  "https://utfs.io/f/d6d02c86-18f7-4871-a439-e47d719582af-m6il6n.jpg";
+
 const AboutUsScreen = () => {
   return (
     <>
-      <HeroBackground heading="ABOUT-US" />
+      <HeroBackground imageUrl={imageUrl} heading="ABOUT-US" />
       <section className="mx-6 mt-16 lg:hidden">
         <p
           className={`${outfit.className} text-justify text-xl leading-[26px] tracking-spaced-06`}
@@ -55,7 +58,7 @@ const AboutUsScreen = () => {
             </p>
 
             <p
-              className={`${outfit.className} mt-4 text-justify text-xl leading-[26px] tracking-spaced-06`}
+              className={`${outfit.className} mt-8 text-justify text-xl leading-[26px] tracking-spaced-06`}
             >
               At Codebrwn, each piece tells you a story. A perspective. Your
               perspective. Your story. It's how you perceive today’s psychology

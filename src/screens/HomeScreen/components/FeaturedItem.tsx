@@ -55,6 +55,7 @@ export async function FeaturedItemTest({
       method: "POST",
       headers: headers,
       body: JSON.stringify(reqBody),
+      next: { revalidate: 1800 },
     });
 
     if (!response.ok) {
@@ -77,21 +78,24 @@ export async function FeaturedItemTest({
 
     const { description } = splitProductDetails(product.description);
 
+    const featuredImageUrl =
+      "https://utfs.io/f/33131881-c481-42aa-a0e3-947abd290f65-k4322t.jpg";
+
     return (
       <>
         <div className="w-full bg-[#4C000A] text-white xl:hidden">
           <div className="mx-auto grid max-w-2xl grid-cols-1 items-center">
-            <picture className="relative mx-6 mt-8 h-[726px] md:mx-0 md:mt-[160px]">
+            <picture className="relative mt-8 h-[526px] md:mx-0 md:mt-[160px]">
               <Image
-                src={product.featuredImage.url || placeholderImage}
+                src={featuredImageUrl || placeholderImage}
                 alt=""
                 fill={true}
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "contain" }}
                 quality={100}
                 priority
               />
             </picture>
-            <div className="mt-16 flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center">
               <h2
                 className={`${outfit.className} text-center text-sm font-bold leading-[16.8px] tracking-[0.6px] text-[#999999]`}
               >
@@ -129,12 +133,12 @@ export async function FeaturedItemTest({
           </div>
         </div>
 
-        <div className="hidden w-full bg-[#4C000A] py-[160px] text-white xl:block">
+        <div className="mt-16 hidden w-full bg-[#4C000A] py-[160px] text-white xl:block">
           <div className="mx-[210px] grid max-w-full grid-cols-2 items-center lg:space-x-40 2xl:space-x-8">
             {/* Image Section */}
             <picture className="relative h-[726px]">
               <Image
-                src={product.featuredImage.url || placeholderImage}
+                src={featuredImageUrl || placeholderImage}
                 alt=""
                 fill={true}
                 style={{ objectFit: "cover" }}
@@ -170,7 +174,7 @@ export async function FeaturedItemTest({
                 <div className="flex justify-center">
                   <Link
                     href={`/products/${formattedTitle}`}
-                    className="my-12 flex h-[54px] w-[168px] items-center justify-center gap-[8px] border-[1px] border-white px-6 py-4"
+                    className="my-12 flex h-[54px] w-[168px] items-center justify-center gap-[8px] border-[1px] border-white px-6 py-4 transition-all duration-300 hover:bg-white hover:text-black"
                   >
                     <p
                       className={`${fira_mono.className} text-center text-sm leading-[14.4px] tracking-[0.6px]`}

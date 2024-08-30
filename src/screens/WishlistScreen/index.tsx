@@ -29,7 +29,7 @@ const ProductCard = ({
   return (
     <>
       <Link
-        className="ease-in-quad cursor-pointer transition-all duration-150 hover:z-10 hover:scale-[1.02] hover:border-[0.5px] hover:border-black focus-visible:scale-[1.02] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+        className="ease-in-quad cursor-pointer transition-all duration-300 hover:z-10 hover:scale-[1.02] hover:border-[0.5px] hover:border-black focus-visible:scale-[1.02] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
         href={`/products/${formattedTitle}`}
       >
         <div className="group relative">

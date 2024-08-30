@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { outfit, fira_mono, roboto } from "@/app/fonts";
 import { Fira_Mono } from "next/font/google";
+import Link from "next/link";
 
 const firaMono2 = Fira_Mono({ weight: "500", subsets: ["latin"] });
 
@@ -121,11 +122,13 @@ const Footer = () => {
             CONNECT
           </h1>
           <ul className="list-none space-y-4">
-            <li
-              className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
-            >
-              Instagram
-            </li>
+            <Link href="https://www.instagram.com/code.brwn/">
+              <li
+                className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
+              >
+                Instagram
+              </li>
+            </Link>
             <li
               className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
             >
@@ -207,25 +210,39 @@ const Footer = () => {
               HELP
             </h1>
             <ul className="list-none space-y-4">
-              <li
-                className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
-              >
-                Contact Us
+              {/* <Link href="/contact-us"> */}
+              <li>
+                <Link
+                  href="/contact-us"
+                  className={`${firaMono2.className} cursor-pointer text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4] transition-all duration-300 hover:text-gray-400`}
+                >
+                  Contact Us
+                </Link>
               </li>
-              <li
-                className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
-              >
-                Shipping & Payment
+              {/* </Link> */}
+              <li>
+                <Link
+                  href="/shipping&payment"
+                  className={`${firaMono2.className} cursor-pointer text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4] transition-all duration-300 hover:text-gray-400`}
+                >
+                  Shipping & Payment
+                </Link>
               </li>
-              <li
-                className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
-              >
-                Returns & Exchanges
+              <li>
+                <Link
+                  href="/return-policy"
+                  className={`${firaMono2.className} cursor-pointer text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4] transition-all duration-300 hover:text-gray-400`}
+                >
+                  Returns & Exchanges
+                </Link>
               </li>
-              <li
-                className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
-              >
-                Track your order
+              <li>
+                <Link
+                  href="track-your-order"
+                  className={`${firaMono2.className} cursor-pointer text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4] transition-all duration-300 hover:text-gray-400`}
+                >
+                  Track your order
+                </Link>
               </li>
               {/* <li
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
@@ -241,11 +258,14 @@ const Footer = () => {
               CONNECT
             </h1>
             <ul className="list-none space-y-4">
-              <li
-                className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
-              >
-                Instagram
-              </li>
+              <Link href="https://www.instagram.com/code.brwn/">
+                <li
+                  className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
+                >
+                  Instagram
+                </li>
+              </Link>
+
               <li
                 className={`${firaMono2.className} text-[16px] leading-[16px] tracking-[0.6px] text-[#F7F7F4]`}
               >
@@ -253,7 +273,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col justify-start">
+          <div className="flex flex-col justify-start opacity-5">
             <h1
               className={`${outfit.className} mb-4 text-[10px] font-bold leading-[10px] tracking-[0.6px] text-[#999999]`}
             >

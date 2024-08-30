@@ -8,13 +8,13 @@ const placeholderImage = "/product-image-placeholder.svg";
 
 const Grid = () => {
   const tshirtsUrl =
-    "https://utfs.io/f/7e466597-af96-46ee-a586-4d41b24722c6-1mptwr.jpeg";
+    "https://utfs.io/f/48151d97-8d59-4cbf-8cd6-e59ddf22f1ba-9qoswe.jpg";
 
   const capsUrl =
     "https://utfs.io/f/6e75901f-b271-4cdd-8bd3-3dbe6fa95e8d-1mptws.jpeg";
 
-  const bagsUrl =
-    "https://utfs.io/f/6680921f-52ba-42ca-a76c-26527dd8dca5-1mptwv.jpeg";
+  const shirtsUrl =
+    "https://utfs.io/f/26c9bbba-9764-4281-974e-698b4a118531-rql3x9.jpg";
   return (
     <>
       {/*MOBILE VIEW */}
@@ -38,7 +38,7 @@ const Grid = () => {
                 >
                   T-SHIRTS
                 </h1>
-                <div className="mt-3 flex items-center justify-center">
+                {/* <div className="mt-3 flex items-center justify-center">
                   <button
                     className={`flex h-[32px] w-[55.25px] items-center justify-center gap-[5.54px] bg-white px-[16.63px] py-[11.08px]`}
                   >
@@ -48,7 +48,7 @@ const Grid = () => {
                       SHOP
                     </div>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@ const Grid = () => {
                 >
                   CAPS
                 </h1>
-                <div className="mt-3 flex items-center justify-center">
+                {/* <div className="mt-3 flex items-center justify-center">
                   <button
                     className={`flex h-[32px] w-[55.25px] items-center justify-center gap-[5.54px] bg-white px-[16.63px] py-[11.08px]`}
                   >
@@ -80,7 +80,7 @@ const Grid = () => {
                       SHOP
                     </div>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -90,7 +90,7 @@ const Grid = () => {
           <div className="relative h-[310px]">
             <picture>
               <Image
-                src={bagsUrl || placeholderImage}
+                src={shirtsUrl || placeholderImage}
                 alt=""
                 fill={true}
                 style={{ objectFit: "cover" }}
@@ -105,7 +105,7 @@ const Grid = () => {
                 >
                   SHIRTS
                 </h1>
-                <div className="mt-3 flex items-center justify-center">
+                {/* <div className="mt-3 flex items-center justify-center">
                   <button
                     className={`flex h-[32px] w-[55.25px] items-center justify-center gap-[5.54px] bg-white px-[16.63px] py-[11.08px]`}
                   >
@@ -115,7 +115,7 @@ const Grid = () => {
                       SHOP
                     </div>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -142,7 +142,7 @@ const Grid = () => {
                 >
                   T-SHIRTS
                 </h1>
-                <div className="mt-8 flex items-center justify-center">
+                {/* <div className="mt-8 flex items-center justify-center">
                   <button
                     className={`flex h-[46px] w-[80px] items-center justify-center gap-[8px] bg-white px-[24px] py-[16px]`}
                   >
@@ -152,7 +152,7 @@ const Grid = () => {
                       SHOP
                     </div>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -172,7 +172,7 @@ const Grid = () => {
                 >
                   CAPS
                 </h1>
-                <div className="mt-8 flex items-center justify-center">
+                {/* <div className="mt-8 flex items-center justify-center">
                   <button
                     className={`flex h-[46px] w-[80px] items-center justify-center gap-[8px] bg-white px-[24px] py-[16px]`}
                   >
@@ -182,7 +182,7 @@ const Grid = () => {
                       SHOP
                     </div>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -191,7 +191,7 @@ const Grid = () => {
         <section className="grid grid-cols-1">
           <div className="relative h-[1117px]">
             <Image
-              src={bagsUrl}
+              src={shirtsUrl}
               alt="Image 1"
               fill={true}
               style={{ objectFit: "cover" }}
@@ -205,7 +205,7 @@ const Grid = () => {
                 >
                   SHIRTS
                 </h1>
-                <div className="mt-8 flex items-center justify-center">
+                {/* <div className="mt-8 flex items-center justify-center">
                   <button
                     className={`flex h-[46px] w-[80px] items-center justify-center gap-[8px] bg-white px-[24px] py-[16px]`}
                   >
@@ -215,7 +215,7 @@ const Grid = () => {
                       SHOP
                     </div>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

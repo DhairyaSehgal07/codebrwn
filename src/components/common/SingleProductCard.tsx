@@ -38,7 +38,7 @@ const SingleProductCard = async ({
 
         <section className="mx-6 mt-8 lg:mx-0 lg:w-5/12 lg:text-center">
           <div className="lg:px-16">
-            <div className="flex flex-col items-start justify-between gap-4">
+            <div className="flex flex-col items-start justify-between gap-4 text-left">
               <span
                 className={`${outfit.className} font-semibold leading-[19px] tracking-spaced-06 md:text-xl`}
               >

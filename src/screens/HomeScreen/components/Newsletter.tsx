@@ -127,11 +127,11 @@ const Newsletter = () => {
                     </div>
                     <div className="flex items-center justify-center">
                       <button
-                        className="mt-14 flex h-[52px] w-[114px] items-center justify-center border-[1.18px] border-black px-[28px] py-[19px] text-center"
+                        className="mt-14 flex h-[52px] w-[114px] items-center justify-center border-[1.18px] border-black px-[28px] py-[19px] text-center transition-all duration-300 hover:bg-black/80 hover:text-white"
                         type="button"
                       >
                         <p
-                          className={`${fira_mono.className} text-center text-[12px] leading-[14.4px] tracking-[0.6px] text-black`}
+                          className={`${fira_mono.className} text-center text-[12px] leading-[14.4px] tracking-[0.6px]`}
                         >
                           SIGN UP
                         </p>

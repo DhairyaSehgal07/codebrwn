@@ -1,10 +1,10 @@
+import ReturnPolicyScreen from "@/screens/ReturnPolicyScreen/page";
 import React from "react";
-import SignUpScreen from "@/screens/SignUpScreen";
 
 const page = () => {
   return (
     <>
-      <SignUpScreen />
+      <ReturnPolicyScreen />
     </>
   );
 };
