@@ -59,3 +59,45 @@
   }
 }
 
+/* This is desktop nav-link */
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-link:hover::after {
+  visibility: visible;
+  width: 100%;
+}
+
+.mobile-nav-footer-link {
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.6px;
+  color: #000000;
+}
+
+.rotate-div {
+  height: 118px;
+  width: 118px;
+  animation: rotate-animation 1s infinite linear;
+}
+@keyframes rotate-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
